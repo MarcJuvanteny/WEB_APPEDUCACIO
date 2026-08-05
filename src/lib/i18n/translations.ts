@@ -36,6 +36,9 @@ export type Dictionary = {
       comparisonLabel: string;
       studentName: string;
       averageName: string;
+      evolutionLabel: string;
+      trimesterLabels: string[];
+      devicesLabel: string;
       climaxLabel: string;
       piece1: { eyebrow: string; name: string; meta: string };
       piece2: { eyebrow: string };
@@ -163,6 +166,9 @@ const ca: Dictionary = {
       comparisonLabel: "Compara amb la resta de la classe",
       studentName: "Laia",
       averageName: "Mitjana",
+      evolutionLabel: "Evolució per trimestre",
+      trimesterLabels: ["1r trim.", "2n trim.", "3r trim."],
+      devicesLabel: "Des de qualsevol dispositiu",
       climaxLabel: "L'informe es genera sol",
       piece1: { eyebrow: "Informe trimestral", name: "Laia", meta: "3r B · Juny" },
       piece2: { eyebrow: "Competències" },
@@ -355,6 +361,9 @@ const es: Dictionary = {
       comparisonLabel: "Compara con el resto de la clase",
       studentName: "Laia",
       averageName: "Media",
+      evolutionLabel: "Evolución por trimestre",
+      trimesterLabels: ["1er trim.", "2º trim.", "3er trim."],
+      devicesLabel: "Desde cualquier dispositivo",
       climaxLabel: "El informe se genera solo",
       piece1: { eyebrow: "Informe trimestral", name: "Laia", meta: "3º B · Junio" },
       piece2: { eyebrow: "Competencias" },
