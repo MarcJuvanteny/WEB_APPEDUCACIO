@@ -7,20 +7,39 @@ export function Footer() {
 
   return (
     <footer className="bg-ink px-6 py-14 text-white/60">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6">
-        <span className="font-display text-xl text-white">SeJus</span>
-        <div className="flex flex-wrap gap-8 text-sm">
-          {t.footer.links.map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="text-white/60 transition-colors duration-150 hover:text-white"
-            >
-              {link}
-            </a>
-          ))}
+      <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-between gap-10">
+        <div>
+          <span className="font-display text-xl text-white">SeJus</span>
+          <p className="mt-2 font-display text-base italic text-white/50">{t.footer.tagline}</p>
         </div>
-        <span className="text-sm">{t.footer.rights}</span>
+
+        <div className="flex flex-wrap gap-x-16 gap-y-8">
+          <div className="flex flex-col gap-2 text-sm">
+            {t.footer.primaryLinks.map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-white/60 transition-colors duration-150 hover:text-white"
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+          <div className="flex flex-col gap-2 text-sm">
+            {t.footer.legalLinks.map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-white/40 transition-colors duration-150 hover:text-white/70"
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="mx-auto mt-10 max-w-6xl border-t border-white/10 pt-6 text-sm">
+        {t.footer.rights}
       </div>
     </footer>
   );

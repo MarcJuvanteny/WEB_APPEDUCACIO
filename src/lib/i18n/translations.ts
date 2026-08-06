@@ -25,6 +25,8 @@ export type Dictionary = {
   };
   scrolly: {
     stages: { eyebrow: string; title: string; description: string }[];
+    closingTagline: string;
+    startLabel: string;
     card: {
       fichaLabel: string;
       name: string;
@@ -40,6 +42,7 @@ export type Dictionary = {
       trimesterLabels: string[];
       devicesLabel: string;
       climaxLabel: string;
+      comingSoonLabel: string;
       piece1: { eyebrow: string; name: string; meta: string };
       piece2: { eyebrow: string };
       piece3: { eyebrow: string; items: string[] };
@@ -64,8 +67,19 @@ export type Dictionary = {
     eyebrow: string;
     items: { quote: string; author: string }[];
   };
+  comingSoon: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    note: string;
+  };
   finalCta: { title: string; cta: string };
-  footer: { links: string[]; rights: string };
+  footer: {
+    tagline: string;
+    primaryLinks: string[];
+    legalLinks: string[];
+    rights: string;
+  };
 };
 
 const ca: Dictionary = {
@@ -101,48 +115,50 @@ const ca: Dictionary = {
   scrolly: {
     stages: [
       {
-        eyebrow: "01 · Inici — comença el curs",
+        eyebrow: "Setembre",
         title: "Un curs nou comença en tres minuts.",
         description:
           "El mestre arriba al setembre amb una classe nova. SeJus li permet tenir tots els alumnes configurats en minuts. Sense Excels, sense paper, sense configuracions complexes.",
       },
       {
-        eyebrow: "02 · Primeres notes",
+        eyebrow: "Octubre – Novembre",
         title: "Saps com va cada alumne abans que ell mateix s'adoni.",
         description:
           "En el moment que el mestre introdueix les primeres notes, el gràfic d'aranya ja mostra qui va bé i qui necessita atenció. No cal esperar al final del trimestre per veure-ho.",
       },
       {
-        eyebrow: "03 · Informe trimestral",
+        eyebrow: "Desembre",
         title: "Tu coneixes l'alumne. SeJus t'ajuda a explicar-lo.",
         description:
           "SeJus analitza tots els mesos de seguiment, detecta patrons, identifica punts forts i febles, i genera un text pedagògic que el mestre revisa i signa.",
       },
       {
-        eyebrow: "04 · Progrés visible",
+        eyebrow: "Gener – Març",
         title: "La diferència entre una nota i una història.",
         description:
           "No és una foto del moment — és una pel·lícula del curs sencer. El mestre veu si un alumne ha millorat, si un patró es repeteix, si una competència sempre queda endarrerida.",
       },
       {
-        eyebrow: "05 · Curs en una fitxa",
+        eyebrow: "Abril – Maig",
         title: "Tot el que saps d'un alumne, en un sol lloc.",
         description:
           "Notes per competència, evolució per trimestre i comentaris dels mestres, comparats amb la classe. Consultable des del mòbil, la tauleta o l'ordinador.",
       },
       {
-        eyebrow: "06 · Informe final",
+        eyebrow: "Juny",
         title: "Un informe que els pares llegiran de veritat.",
         description:
           "L'informe final compara els tres trimestres, celebra les millores i assenyala de manera constructiva el que encara cal treballar — en un to proper i sense tecnicismes.",
       },
       {
-        eyebrow: "07 · Tornada — nou curs",
+        eyebrow: "Setembre següent",
         title: "El que has après d'ells, no s'oblida.",
         description:
           "Quan comença el setembre següent, el nou mestre pot veure l'historial complet de l'alumne. El progrés no es perd. La feina d'un any no desapareix en un calaix.",
       },
     ],
+    closingTagline: "Cada nen, una història.",
+    startLabel: "Comencem el curs!",
     card: {
       fichaLabel: "Fitxa de seguiment",
       name: "Laia",
@@ -170,6 +186,7 @@ const ca: Dictionary = {
       trimesterLabels: ["1r trim.", "2n trim.", "3r trim."],
       devicesLabel: "Des de qualsevol dispositiu",
       climaxLabel: "L'informe es genera sol",
+      comingSoonLabel: "Properament",
       piece1: { eyebrow: "Informe trimestral", name: "Laia", meta: "3r B · Juny" },
       piece2: { eyebrow: "Competències" },
       piece3: {
@@ -253,12 +270,21 @@ const ca: Dictionary = {
       },
     ],
   },
+  comingSoon: {
+    eyebrow: "Properament",
+    title: "El curs 2026-2027 ja hi serà, esperant-te.",
+    description:
+      "Estem preparant la sincronització al núvol perquè, quan comenci el setembre que ve, obris SeJus i tot hi sigui: alumnes, historial, comentaris. Sense exportar res, sense fer còpies a mà.",
+    note: "En proves amb un grapat d'escoles aquest curs.",
+  },
   finalCta: {
     title: "Cada alumne té una història. Dona-li el seguiment que es mereix.",
     cta: "Prova SeJus gratis",
   },
   footer: {
-    links: ["Funcionalitats", "Preus", "Contacte"],
+    tagline: "Cada nen, una història.",
+    primaryLinks: ["Funcionalitats", "Preus", "Contacte"],
+    legalLinks: ["Política de privacitat", "Avís legal", "Termes d'ús"],
     rights: "© 2026 SeJus",
   },
 };
@@ -296,48 +322,50 @@ const es: Dictionary = {
   scrolly: {
     stages: [
       {
-        eyebrow: "01 · Inicio — empieza el curso",
+        eyebrow: "Septiembre",
         title: "Un curso nuevo empieza en tres minutos.",
         description:
           "El maestro llega en septiembre con una clase nueva. SeJus le permite tener a todo el alumnado configurado en minutos. Sin Excels, sin papel, sin configuraciones complejas.",
       },
       {
-        eyebrow: "02 · Primeras notas",
+        eyebrow: "Octubre – Noviembre",
         title: "Sabes cómo va cada alumno antes de que él mismo se dé cuenta.",
         description:
           "En el momento en que el maestro introduce las primeras notas, el gráfico de araña ya muestra quién va bien y quién necesita atención. No hace falta esperar al final del trimestre para verlo.",
       },
       {
-        eyebrow: "03 · Informe trimestral",
+        eyebrow: "Diciembre",
         title: "Tú conoces al alumno. SeJus te ayuda a explicarlo.",
         description:
           "SeJus analiza todos los meses de seguimiento, detecta patrones, identifica puntos fuertes y débiles, y genera un texto pedagógico que el maestro revisa y firma.",
       },
       {
-        eyebrow: "04 · Progreso visible",
+        eyebrow: "Enero – Marzo",
         title: "La diferencia entre una nota y una historia.",
         description:
           "No es una foto del momento — es una película del curso entero. El maestro ve si un alumno ha mejorado, si un patrón se repite, si una competencia siempre queda rezagada.",
       },
       {
-        eyebrow: "05 · Curso en una ficha",
+        eyebrow: "Abril – Mayo",
         title: "Todo lo que sabes de un alumno, en un solo lugar.",
         description:
           "Notas por competencia, evolución por trimestre y comentarios de los maestros, comparados con la clase. Consultable desde el móvil, la tableta o el ordenador.",
       },
       {
-        eyebrow: "06 · Informe final",
+        eyebrow: "Junio",
         title: "Un informe que los padres leerán de verdad.",
         description:
           "El informe final compara los tres trimestres, celebra las mejoras y señala de forma constructiva lo que todavía hay que trabajar — en un tono cercano y sin tecnicismos.",
       },
       {
-        eyebrow: "07 · Vuelta — nuevo curso",
+        eyebrow: "Septiembre siguiente",
         title: "Lo que has aprendido de ellos, no se olvida.",
         description:
           "Cuando empieza el septiembre siguiente, el nuevo maestro puede ver el historial completo del alumno. El progreso no se pierde. El trabajo de un año no desaparece en un cajón.",
       },
     ],
+    closingTagline: "Cada niño, una historia.",
+    startLabel: "¡Empezamos el curso!",
     card: {
       fichaLabel: "Ficha de seguimiento",
       name: "Laia",
@@ -365,6 +393,7 @@ const es: Dictionary = {
       trimesterLabels: ["1er trim.", "2º trim.", "3er trim."],
       devicesLabel: "Desde cualquier dispositivo",
       climaxLabel: "El informe se genera solo",
+      comingSoonLabel: "Próximamente",
       piece1: { eyebrow: "Informe trimestral", name: "Laia", meta: "3º B · Junio" },
       piece2: { eyebrow: "Competencias" },
       piece3: {
@@ -448,12 +477,21 @@ const es: Dictionary = {
       },
     ],
   },
+  comingSoon: {
+    eyebrow: "Próximamente",
+    title: "El curso 2026-2027 ya estará ahí, esperándote.",
+    description:
+      "Estamos preparando la sincronización en la nube para que, cuando empiece el próximo septiembre, abras SeJus y todo esté ahí: alumnado, historial, comentarios. Sin exportar nada, sin copias a mano.",
+    note: "En pruebas con un puñado de colegios este curso.",
+  },
   finalCta: {
     title: "Cada alumno tiene una historia. Dale el seguimiento que se merece.",
     cta: "Prueba SeJus gratis",
   },
   footer: {
-    links: ["Funcionalidades", "Precios", "Contacto"],
+    tagline: "Cada niño, una historia.",
+    primaryLinks: ["Funcionalidades", "Precios", "Contacto"],
+    legalLinks: ["Política de privacidad", "Aviso legal", "Términos de uso"],
     rights: "© 2026 SeJus",
   },
 };

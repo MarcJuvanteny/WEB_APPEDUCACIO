@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useScroll, useMotionValueEvent, motion, AnimatePresence, type Variants } from "framer-motion";
+import { FolderIcon, CloudIcon } from "@phosphor-icons/react";
 import { useLanguage } from "@/lib/i18n/language-provider";
 import { useScrollytellingEnabled } from "@/lib/use-scrollytelling-enabled";
 import { RevealGroup, RevealItem } from "@/components/scroll-reveal";
@@ -19,23 +20,15 @@ import {
 
 const STAGE_COUNT = 7;
 const STAGE_MAX = STAGE_COUNT - 1;
-const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
-const cardVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.16, delayChildren: 0.08 } },
-};
-const blockVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_OUT } },
-};
 const listVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.11 } },
+  visible: { transition: { staggerChildren: 0.07 } },
 };
 const rowVariants: Variants = {
-  hidden: { opacity: 0, y: 9, scale: 0.96 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.42, ease: EASE_OUT } },
+  hidden: { opacity: 0, y: 8, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: EASE_OUT } },
 };
 
 const CARD_CLASS =
@@ -66,174 +59,226 @@ function ScrollytellingReportScene({ t }: { t: Dictionary }) {
   const stageOffset = (idx: number) => -clamp((stageFloat - idx) / 0.85, -1, 1) * 34;
 
   return (
-    <section id="scrollytelling" ref={sceneRef} className="relative mx-auto max-w-[1600px]" style={{ height: `${STAGE_COUNT * 140}vh` }}>
-      <div className="flex h-full">
-        <div className="order-2 flex w-[46%] items-center justify-center p-6" style={{ position: "sticky", top: 0, height: "100vh" }}>
-          <FichaStage t={t.scrolly.card} stageIndex={activeStage} />
+    <section
+      id="scrollytelling"
+      ref={sceneRef}
+      className="relative bg-cream"
+      style={{ height: `${STAGE_COUNT * 140}vh` }}
+    >
+      <div
+        className="pointer-events-none absolute inset-x-0 top-28 z-10 hidden justify-center md:flex"
+        aria-hidden="true"
+      >
+        <span className="inline-flex items-center gap-2 text-sm italic text-ink-soft/45">
+          <span aria-hidden="true">↓</span>
+          {t.scrolly.startLabel}
+        </span>
+      </div>
+
+      <div className="mx-auto flex h-full max-w-6xl">
+        <div
+          className="sticky top-0 hidden h-screen shrink-0 items-center md:flex md:w-6 lg:w-36"
+          aria-hidden="true"
+        >
+          <TimelineRail
+            months={t.scrolly.stages.map((s) => s.eyebrow)}
+            stageFloat={stageFloat}
+          />
         </div>
 
-        <div className="order-1 flex w-[54%] flex-col">
-          {t.scrolly.stages.map((stage, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col justify-center px-8 md:px-16"
-              style={{
-                height: "140vh",
-                opacity: stageOp(idx),
-                transform: `translateY(${stageOffset(idx)}px)`,
-              }}
-            >
-              <div className="mb-3 text-[0.8rem] font-semibold uppercase tracking-wide text-sage">
-                {stage.eyebrow}
+        <div className="flex flex-1">
+          <div
+            className="order-2 flex w-[46%] items-center justify-center p-6"
+            style={{ position: "sticky", top: 0, height: "100vh" }}
+          >
+            <FichaColumn t={t.scrolly.card} stageFloat={stageFloat} activeStage={activeStage} />
+          </div>
+
+          <div className="order-1 flex w-[54%] flex-col">
+            {t.scrolly.stages.map((stage, idx) => (
+              <div
+                key={idx}
+                className="flex flex-col justify-center px-8 md:px-16"
+                style={{
+                  height: "140vh",
+                  opacity: stageOp(idx),
+                  transform: `translateY(${stageOffset(idx)}px)`,
+                }}
+              >
+                <div className="mb-3 text-[0.8rem] font-semibold uppercase tracking-wide text-sage">
+                  {stage.eyebrow}
+                </div>
+                <h3 className="mb-3.5 max-w-[460px] font-display text-3xl leading-tight text-ink md:text-4xl">
+                  {stage.title}
+                </h3>
+                <p className="max-w-[420px] text-base leading-relaxed text-ink-soft">
+                  {stage.description}
+                </p>
+                {idx === STAGE_COUNT - 1 && (
+                  <p className="mt-6 font-display text-lg italic text-terracotta">
+                    {t.scrolly.closingTagline}
+                  </p>
+                )}
               </div>
-              <h3 className="mb-3.5 max-w-[460px] font-display text-3xl leading-tight text-ink md:text-4xl">
-                {stage.title}
-              </h3>
-              <p className="max-w-[420px] text-base leading-relaxed text-ink-soft">
-                {stage.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
+/**
+ * Persistent month rail. Dots stay visible from `md:` up (a simple, always
+ * legible progress marker); the month text itself is an auxiliary label —
+ * small, muted, never competing with the section title — sitting to the
+ * LEFT of the dots, and only shows once there's enough room, from `lg:` up.
+ */
+function TimelineRail({ months, stageFloat }: { months: string[]; stageFloat: number }) {
+  return (
+    <div className="relative flex flex-col gap-5">
+      <div className="absolute top-1 bottom-1 w-px bg-ink/10 left-[3px] lg:left-[125px]" />
+      {months.map((month, i) => {
+        const active = Math.abs(stageFloat - i) < 0.5;
+        return (
+          <div key={i} className="relative flex items-center gap-2.5">
+            <span
+              className="hidden w-28 shrink-0 whitespace-nowrap text-right text-[0.62rem] uppercase tracking-wide transition-all duration-300 lg:inline-block"
+              style={{
+                color: active ? "var(--color-terracotta)" : "rgba(43,36,32,0.32)",
+                fontWeight: active ? 600 : 400,
+              }}
+            >
+              {month}
+            </span>
+            <span
+              className="block h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300"
+              style={{
+                background: active ? "var(--color-terracotta)" : "rgba(43,36,32,0.22)",
+                transform: active ? "scale(1.7)" : "scale(1)",
+              }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 type CardDict = Dictionary["scrolly"]["card"];
 
 /**
- * Renders ONE fully-formed illustration per narrative stage (0-6). Stages
- * never show a partially-faded or mid-construction state once settled:
- * whatever is visible for a given stageIndex ends up at full opacity,
- * complete. Movement (elements drawing/growing/stacking in) only happens
- * while scrolling between stages — never while a stage is centered and
- * being read, since the entrance choreography finishes well within the
- * generous scroll dwell time of each stage.
+ * The "fitxa de seguiment" card is ONE persistent DOM element across
+ * stages 0-4 (empty → radar → informe → evolution → devices) — it never
+ * unmounts and remounts between those stages, only its inner content
+ * morphs. Stages 5-6 (thumbnail reveal, folder) are conceptually distinct
+ * moments and use a fade + small vertical shift when swapping in, per the
+ * "never an instant cut" rule.
  */
-function FichaStage({ t, stageIndex }: { t: CardDict; stageIndex: number }) {
+function FichaColumn({
+  t,
+  stageFloat,
+  activeStage,
+}: {
+  t: CardDict;
+  stageFloat: number;
+  activeStage: number;
+}) {
   const phase =
-    stageIndex <= 2
-      ? "ficha"
-      : stageIndex === 3
+    activeStage <= 2
+      ? "core"
+      : activeStage === 3
         ? "progress"
-        : stageIndex === 4
+        : activeStage === 4
           ? "devices"
-          : stageIndex === 5
+          : activeStage === 5
             ? "thumbnail"
-            : "archive";
-
-  const cardExit = { opacity: 0, y: -10, transition: { duration: 0.3, ease: EASE_OUT } };
-  const bareExit = { opacity: 0, scale: 0.94, transition: { duration: 0.3, ease: EASE_OUT } };
+            : "folder";
+  const isCard = phase === "core" || phase === "progress" || phase === "devices";
 
   return (
     <div className="relative w-full max-w-[420px]">
       <AnimatePresence mode="wait">
-        {phase === "ficha" && (
+        {isCard ? (
           <motion.div
-            key={`ficha-${stageIndex}`}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            exit={cardExit}
+            key="card-group"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } }}
+            exit={{ opacity: 0, y: -10, transition: { duration: 0.3, ease: EASE_OUT } }}
             className={CARD_CLASS}
             style={{ maxHeight: "calc(100vh - 56px)" }}
           >
-            <FichaContent t={t} stageIndex={stageIndex} />
-          </motion.div>
-        )}
+            <div className="mb-1 text-xs uppercase tracking-normal text-ink-soft/70">{t.fichaLabel}</div>
+            <div className="mb-4 font-display text-2xl text-ink">{t.name}</div>
 
-        {phase === "progress" && (
-          <motion.div
-            key="progress"
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            exit={cardExit}
-            className={CARD_CLASS}
-            style={{ maxHeight: "calc(100vh - 56px)" }}
-          >
-            <ProgressChart t={t} />
+            <AnimatePresence mode="wait">
+              {phase === "core" && (
+                <motion.div
+                  key="core"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                >
+                  <FichaCoreBody t={t} stageFloat={stageFloat} />
+                </motion.div>
+              )}
+              {phase === "progress" && (
+                <motion.div
+                  key="progress"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                >
+                  <ProgressBody t={t} stageFloat={stageFloat} />
+                </motion.div>
+              )}
+              {phase === "devices" && (
+                <motion.div
+                  key="devices"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                >
+                  <DevicesBody t={t} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
-        )}
-
-        {phase === "devices" && (
+        ) : (
           <motion.div
-            key="devices"
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            exit={cardExit}
-            className={CARD_CLASS}
-            style={{ maxHeight: "calc(100vh - 56px)" }}
-          >
-            <DeviceStack t={t} />
-          </motion.div>
-        )}
-
-        {phase === "thumbnail" && (
-          <motion.div
-            key="thumbnail"
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            exit={bareExit}
+            key="bare-group"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: EASE_OUT } }}
+            exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.3, ease: EASE_OUT } }}
             className="flex flex-col items-center"
           >
-            <DocumentStackReveal t={t} />
-          </motion.div>
-        )}
-
-        {phase === "archive" && (
-          <motion.div
-            key="archive"
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            exit={cardExit}
-            className="flex flex-col items-center"
-          >
-            <motion.span
-              variants={blockVariants}
-              className="mb-6 text-[0.68rem] uppercase tracking-wide text-terracotta"
-            >
-              {t.climaxLabel}
-            </motion.span>
-            <motion.svg viewBox="0 0 200 200" className="h-[170px] w-[170px]" variants={listVariants}>
-              <motion.ellipse variants={rowVariants} cx={100} cy={158} rx={78} ry={26} fill="#C9C2B4" />
-              <motion.ellipse variants={rowVariants} cx={100} cy={122} rx={78} ry={26} fill="#8FA07C" />
-              <motion.ellipse
-                variants={rowVariants}
-                cx={100}
-                cy={86}
-                rx={78}
-                ry={26}
-                fill="var(--color-sage)"
-              />
-              <motion.ellipse
-                variants={rowVariants}
-                cx={100}
-                cy={50}
-                rx={78}
-                ry={26}
-                fill="var(--color-cream)"
-                stroke="var(--color-terracotta)"
-                strokeWidth={3}
-                strokeDasharray="7 6"
-              />
-            </motion.svg>
-            <motion.div
-              variants={blockVariants}
-              className="mt-3.5 text-center text-[0.8rem] text-ink-soft/70"
-            >
-              {t.archiveCaption}
-            </motion.div>
-            <motion.div
-              variants={blockVariants}
-              className="mt-5 max-w-[300px] text-center text-[0.8rem] text-ink-soft/70"
-            >
-              {t.returnNote}
-            </motion.div>
+            <AnimatePresence mode="wait">
+              {phase === "thumbnail" && (
+                <motion.div
+                  key="thumbnail"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                >
+                  <DocumentStackReveal t={t} />
+                </motion.div>
+              )}
+              {phase === "folder" && (
+                <motion.div
+                  key="folder"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
+                >
+                  <FolderCloud t={t} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
@@ -241,11 +286,21 @@ function FichaStage({ t, stageIndex }: { t: CardDict; stageIndex: number }) {
   );
 }
 
-function FichaContent({ t, stageIndex }: { t: CardDict; stageIndex: number }) {
-  const infos = CRITERIA_HISTORIES.map((history) => criterionInfo(history, stageIndex));
+/**
+ * Stages "Setembre" → "Desembre" (0-2). One persistent radar whose vertices
+ * are recomputed every render straight from the raw, continuous
+ * `stageFloat` — no draw-in animation, no remount: the shape simply grows
+ * as the user scrolls, exactly in step with their scroll speed, and is
+ * already fully settled by the time a stage centers (criterionInfo's own
+ * thresholds resolve to clean values at/after each checkpoint).
+ */
+function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
+  const infos = CRITERIA_HISTORIES.map((history) => criterionInfo(history, stageFloat));
   const visibleInfos = infos.filter((info) => info.visible);
-  const showChart = stageIndex >= 1;
-  const showComment = stageIndex >= 2;
+  const showEmpty = stageFloat < 0.6;
+  const showRadar = stageFloat >= 0.35;
+  const showComment = stageFloat >= 1.5;
+  const compact = visibleInfos.length >= 3;
 
   const radarPoints = infos
     .map((info, i) => {
@@ -258,12 +313,11 @@ function FichaContent({ t, stageIndex }: { t: CardDict; stageIndex: number }) {
 
   return (
     <>
-      <div className="mb-1 text-xs uppercase tracking-normal text-ink-soft/70">{t.fichaLabel}</div>
-      <div className="mb-4 font-display text-2xl text-ink">{t.name}</div>
-
-      {stageIndex === 0 && (
+      {showEmpty && (
         <motion.div
-          variants={blockVariants}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: EASE_OUT }}
           className="border-t border-dashed border-ink/12 py-7 text-sm text-ink-soft/70"
         >
           {t.emptyState}
@@ -271,18 +325,20 @@ function FichaContent({ t, stageIndex }: { t: CardDict; stageIndex: number }) {
       )}
 
       {visibleInfos.length > 0 && (
-        <motion.div variants={listVariants} className="mb-4 flex flex-col gap-1.5">
+        <div className={compact ? "mb-3 grid grid-cols-2 gap-1.5" : "mb-4 flex flex-col gap-1.5"}>
           {infos.map(
             (info, i) =>
               info.visible && (
                 <motion.div
                   key={i}
-                  variants={rowVariants}
-                  className="flex items-center justify-between rounded-sm bg-cream px-3 py-1.5"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.32, ease: EASE_OUT }}
+                  className="flex items-center justify-between rounded-sm bg-cream px-2.5 py-1.5"
                 >
-                  <span className="text-[0.78rem] text-ink">{t.criteria[i]}</span>
+                  <span className="truncate text-[0.74rem] text-ink">{t.criteria[i]}</span>
                   <span
-                    className="font-display text-[0.78rem] font-semibold text-sage"
+                    className="ml-1 shrink-0 font-display text-[0.76rem] font-semibold text-sage"
                     title={info.level ? t.levelFull[info.level] : undefined}
                   >
                     {info.level}
@@ -290,11 +346,18 @@ function FichaContent({ t, stageIndex }: { t: CardDict; stageIndex: number }) {
                 </motion.div>
               ),
           )}
-        </motion.div>
+        </div>
       )}
 
-      {showChart && (
-        <svg viewBox="0 0 220 200" className="mb-1 w-full" style={{ height: 140 }}>
+      {showRadar && (
+        <motion.svg
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35, ease: EASE_OUT }}
+          viewBox="0 0 220 200"
+          className="mb-1 w-full"
+          style={{ height: compact ? 150 : 190 }}
+        >
           <polygon points={polygonPoints(0.33)} fill="none" stroke="rgba(43,36,32,0.12)" strokeWidth={1} />
           <polygon points={polygonPoints(0.66)} fill="none" stroke="rgba(43,36,32,0.12)" strokeWidth={1} />
           <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.15)" strokeWidth={1} />
@@ -308,179 +371,203 @@ function FichaContent({ t, stageIndex }: { t: CardDict; stageIndex: number }) {
               stroke="rgba(43,36,32,0.1)"
             />
           ))}
-          <motion.polygon
+          <polygon
             points={radarPoints}
             fill="var(--color-terracotta)"
             fillOpacity={0.35}
             stroke="var(--color-terracotta)"
             strokeWidth={2}
             strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{
-              pathLength: { duration: 1.2, ease: EASE_OUT, delay: 0.25 },
-              opacity: { duration: 0.35, delay: 0.25 },
-            }}
           />
-        </svg>
+        </motion.svg>
       )}
 
       {showComment && (
         <motion.div
-          variants={blockVariants}
-          className="mb-3 rounded-sm bg-cream p-3 text-[0.78rem] leading-relaxed text-ink-soft"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: EASE_OUT }}
+          className="mb-1 rounded-sm bg-cream p-2.5 text-[0.76rem] leading-snug text-ink-soft"
         >
-          <span className="mb-1 block text-[0.65rem] uppercase tracking-wide text-terracotta">
+          <span className="mb-1 block text-[0.62rem] uppercase tracking-wide text-terracotta">
             {t.commentLabel}
           </span>
-          {t.commentText}
+          <span className="line-clamp-2">{t.commentText}</span>
         </motion.div>
       )}
     </>
   );
 }
 
-/** Stage "Progrés visible" — evolution across the three trimesters, not a single snapshot. */
-const TREND_LINES = [
-  { color: "var(--color-terracotta)", values: [42, 61, 74], criterionIndex: 0 },
-  { color: "var(--color-sage)", values: [58, 77, 90], criterionIndex: 3 },
-];
-const CHART_X = [46, 168, 290];
-function trendY(v: number) {
-  return 158 - (v / 100) * 128;
-}
+/** Stage "Gener – Març" — two trimesters overlaid on the same radar, growing from the centre as the section approaches. */
+const RADAR_COMPARE = {
+  early: [45, 40, 50, 42, 38],
+  late: [74, 61, 78, 90, 65],
+};
 
-function ProgressChart({ t }: { t: CardDict }) {
+function ProgressBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
+  const growth = clamp((stageFloat - 2.5) / 0.5, 0, 1);
+
+  const toPoints = (values: number[]) =>
+    values
+      .map((v, i) => {
+        const r = (v / 100) * growth;
+        const x = CENTER.x + AXES[i].dx * RADIUS * r;
+        const y = CENTER.y + AXES[i].dy * RADIUS * r;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      })
+      .join(" ");
+
   return (
     <>
-      <div className="mb-1 text-xs uppercase tracking-normal text-ink-soft/70">{t.fichaLabel}</div>
-      <div className="mb-1 font-display text-2xl text-ink">{t.name}</div>
-      <div className="mb-4 text-[0.68rem] uppercase tracking-wide text-terracotta">{t.evolutionLabel}</div>
+      <div className="mb-3 text-[0.68rem] uppercase tracking-wide text-terracotta">{t.evolutionLabel}</div>
 
-      <svg viewBox="0 0 320 190" className="w-full" style={{ height: 190 }}>
-        <line x1={30} y1={158} x2={310} y2={158} stroke="rgba(43,36,32,0.12)" />
-        {TREND_LINES.map((line, li) => {
-          const d = line.values
-            .map((v, i) => `${i === 0 ? "M" : "L"} ${CHART_X[i]} ${trendY(v)}`)
-            .join(" ");
-          return (
-            <g key={li}>
-              <motion.path
-                d={d}
-                fill="none"
-                stroke={line.color}
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{
-                  pathLength: { duration: 1.3, ease: EASE_OUT, delay: 0.2 + li * 0.4 },
-                  opacity: { duration: 0.3, delay: 0.2 + li * 0.4 },
-                }}
-              />
-              {line.values.map((v, i) => (
-                <motion.circle
-                  key={i}
-                  cx={CHART_X[i]}
-                  cy={trendY(v)}
-                  r={4.5}
-                  fill={line.color}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    ease: EASE_OUT,
-                    delay: 0.2 + li * 0.4 + i * 0.42,
-                  }}
-                />
-              ))}
-            </g>
-          );
-        })}
-        {t.trimesterLabels.map((label, i) => (
-          <text key={i} x={CHART_X[i]} y={178} textAnchor="middle" fontSize={11} fill="rgba(43,36,32,0.5)">
-            {label}
-          </text>
+      <svg viewBox="0 0 220 200" className="w-full" style={{ height: 200 }}>
+        <polygon points={polygonPoints(0.33)} fill="none" stroke="rgba(43,36,32,0.1)" strokeWidth={1} />
+        <polygon points={polygonPoints(0.66)} fill="none" stroke="rgba(43,36,32,0.1)" strokeWidth={1} />
+        <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.13)" strokeWidth={1} />
+        {AXES.map((axis, i) => (
+          <line
+            key={i}
+            x1={CENTER.x}
+            y1={CENTER.y}
+            x2={CENTER.x + axis.dx * RADIUS}
+            y2={CENTER.y + axis.dy * RADIUS}
+            stroke="rgba(43,36,32,0.08)"
+          />
         ))}
+        <polygon
+          points={toPoints(RADAR_COMPARE.early)}
+          fill="none"
+          stroke="var(--color-ink-soft)"
+          strokeWidth={1.75}
+          strokeDasharray="4 3"
+          strokeLinejoin="round"
+          opacity={0.7}
+        />
+        <polygon
+          points={toPoints(RADAR_COMPARE.late)}
+          fill="var(--color-terracotta)"
+          fillOpacity={0.32}
+          stroke="var(--color-terracotta)"
+          strokeWidth={2.5}
+          strokeLinejoin="round"
+        />
       </svg>
 
-      <motion.div
-        variants={listVariants}
-        initial="hidden"
-        animate="visible"
-        className="mt-3 flex flex-col gap-2"
+      <div className="mt-3 flex items-center justify-center gap-5">
+        <span className="flex items-center gap-1.5 text-[0.72rem] text-ink-soft">
+          <span className="inline-block h-0 w-3 border-t-[1.75px] border-dashed border-ink-soft" />
+          {t.trimesterLabels[0]}
+        </span>
+        <span className="flex items-center gap-1.5 text-[0.72rem] font-medium text-terracotta">
+          <span className="inline-block h-0.5 w-3 rounded-full bg-terracotta" />
+          {t.trimesterLabels[2]}
+        </span>
+      </div>
+    </>
+  );
+}
+
+/** Stage "Abril – Maig" — a phone and a tablet, recognisable at a glance. */
+function DevicesBody({ t }: { t: CardDict }) {
+  return (
+    <>
+      <div className="mb-7 text-[0.68rem] uppercase tracking-wide text-terracotta">{t.devicesLabel}</div>
+
+      <div className="relative mx-auto" style={{ width: 260, height: 240 }}>
+        <motion.div
+          className="absolute rounded-[14px] border-2 border-ink/12 bg-cream/80"
+          style={{ width: 168, height: 216, left: 4, top: 4, rotate: -4 }}
+          initial={{ opacity: 0, y: 14, scale: 0.94 }}
+          animate={{ opacity: 0.55, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.1 }}
+        >
+          <div className="p-4">
+            <div className="mb-2 h-1.5 w-1/2 rounded-full bg-ink/15" />
+            <div className="mb-4 h-1 w-1/3 rounded-full bg-ink/10" />
+            <div className="h-16 w-full rounded-md bg-ink/8" />
+            <div className="mt-3 h-1 w-full rounded-full bg-ink/10" />
+            <div className="mt-1.5 h-1 w-2/3 rounded-full bg-ink/10" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="absolute rounded-[22px] border-[2.5px] border-terracotta bg-surface shadow-[0_16px_32px_rgba(43,36,32,0.16)]"
+          style={{ width: 118, height: 208, left: 118, top: 22, rotate: 4 }}
+          initial={{ opacity: 0, y: 14, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.3 }}
+        >
+          <div className="p-3">
+            <div className="mb-2 font-display text-[0.8rem] text-ink">{t.name}</div>
+            <svg viewBox="0 0 220 200" className="mx-auto h-[62px] w-[68px]">
+              <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.15)" strokeWidth={2} />
+              <polygon
+                points="110,44 178,86 152,164 68,164 42,86"
+                fill="var(--color-terracotta)"
+                fillOpacity={0.35}
+                stroke="var(--color-terracotta)"
+                strokeWidth={2.5}
+              />
+            </svg>
+            <div className="mt-2 flex h-6 items-end gap-1">
+              <div className="h-[60%] w-full rounded-sm bg-terracotta" />
+              <div className="h-[90%] w-full rounded-sm bg-terracotta" />
+              <div className="h-[45%] w-full rounded-sm bg-sage" />
+            </div>
+          </div>
+          <div className="absolute bottom-2.5 left-1/2 h-1 w-8 -translate-x-1/2 rounded-full bg-ink/15" />
+        </motion.div>
+      </div>
+    </>
+  );
+}
+
+/** Stage "Setembre següent" — minimal: a folder, a cloud, honestly labelled as not-yet-built. */
+function FolderCloud({ t }: { t: CardDict }) {
+  return (
+    <>
+      <motion.span
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: EASE_OUT }}
+        className="mb-6 inline-flex items-center rounded-full border border-sage/30 bg-sage-tint px-3 py-1 text-[0.65rem] font-medium uppercase tracking-wide text-sage"
       >
-        {TREND_LINES.map((line, i) => (
-          <motion.div key={i} variants={rowVariants} className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full" style={{ background: line.color }} />
-            <span className="text-[0.78rem] text-ink-soft">{t.criteria[line.criterionIndex]}</span>
-          </motion.div>
-        ))}
+        {t.comingSoonLabel}
+      </motion.span>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12, scale: 0.92 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.55, ease: EASE_OUT, delay: 0.12 }}
+        className="relative flex h-[170px] w-[170px] items-center justify-center"
+      >
+        <FolderIcon size={116} weight="regular" className="text-ink-soft/55" />
+        <CloudIcon size={44} weight="regular" className="absolute -top-3 right-3 text-sage" />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.25 }}
+        className="mt-5 text-center text-[0.8rem] text-ink-soft/70"
+      >
+        {t.archiveCaption}
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.35 }}
+        className="mt-3 max-w-[280px] text-center text-[0.8rem] text-ink-soft/70"
+      >
+        {t.returnNote}
       </motion.div>
     </>
   );
 }
 
-/** Stage "Curs en una fitxa" — the same report, reachable from any device. */
-function DeviceStack({ t }: { t: CardDict }) {
-  return (
-    <>
-      <div className="mb-1 text-xs uppercase tracking-normal text-ink-soft/70">{t.fichaLabel}</div>
-      <div className="mb-1 font-display text-2xl text-ink">{t.name}</div>
-      <div className="mb-6 text-[0.68rem] uppercase tracking-wide text-terracotta">{t.devicesLabel}</div>
-
-      <div className="relative mx-auto" style={{ width: 280, height: 210 }}>
-        <motion.div
-          className="absolute rounded-lg border border-ink/10 bg-cream shadow-[0_10px_24px_rgba(43,36,32,0.1)]"
-          style={{ width: 210, height: 130, left: 10, top: 62, rotate: -3 }}
-          initial={{ opacity: 0, y: 16, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.2 }}
-        >
-          <MiniScreen />
-        </motion.div>
-
-        <motion.div
-          className="absolute rounded-xl border border-ink/10 bg-surface shadow-[0_10px_24px_rgba(43,36,32,0.12)]"
-          style={{ width: 106, height: 148, left: 96, top: 16, rotate: 4 }}
-          initial={{ opacity: 0, y: 16, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.65 }}
-        >
-          <MiniScreen compact />
-        </motion.div>
-
-        <motion.div
-          className="absolute rounded-2xl border border-ink/10 bg-surface shadow-[0_10px_24px_rgba(43,36,32,0.14)]"
-          style={{ width: 58, height: 126, left: 160, top: 48, rotate: -6 }}
-          initial={{ opacity: 0, y: 16, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: EASE_OUT, delay: 1.1 }}
-        >
-          <MiniScreen compact />
-        </motion.div>
-      </div>
-    </>
-  );
-}
-
-function MiniScreen({ compact = false }: { compact?: boolean }) {
-  return (
-    <div className={compact ? "p-2.5" : "p-3.5"}>
-      <div className="mb-1.5 h-1.5 w-1/2 rounded-full bg-terracotta" />
-      <div className="mb-2.5 h-1 w-1/3 rounded-full bg-ink/12" />
-      <div className="flex items-end gap-1" style={{ height: compact ? 26 : 34 }}>
-        <div className="h-[55%] w-full rounded-sm bg-terracotta/70" />
-        <div className="h-[85%] w-full rounded-sm bg-terracotta/70" />
-        <div className="h-[40%] w-full rounded-sm bg-terracotta/30" />
-        <div className="h-[70%] w-full rounded-sm bg-sage/70" />
-      </div>
-    </div>
-  );
-}
-
-/** Stage "Informe final" — loose documents pile up, then settle into the finished report. */
+/** Stage "Juny" — loose documents pile up, then settle into the finished report. */
 const DOC_SCATTER = [
   { x: -90, y: -55, r: -13 },
   { x: 95, y: -70, r: 11 },
@@ -509,7 +596,9 @@ function DocumentStackReveal({ t }: { t: CardDict }) {
   return (
     <>
       <motion.span
-        variants={blockVariants}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: EASE_OUT }}
         className="mb-6 block text-center text-[0.68rem] uppercase tracking-wide text-terracotta"
       >
         {t.climaxLabel}
@@ -621,7 +710,7 @@ function ReportThumbnail({ t }: { t: CardDict }) {
               className={`w-full rounded-sm ${bar.color}`}
               initial={{ height: 0 }}
               animate={{ height: bar.height }}
-              transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.25 + i * 0.09 }}
+              transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.25 + i * 0.07 }}
             />
           ))}
         </div>
@@ -676,7 +765,9 @@ function StaticReport({ t }: { t: Dictionary }) {
             key={idx}
             className="rounded-card border border-ink/10 bg-surface p-6"
           >
-            <span className="font-display text-lg text-terracotta/50">{stage.eyebrow.slice(0, 2)}</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-terracotta/70">
+              {stage.eyebrow}
+            </span>
             <h3 className="mt-2 font-display text-lg text-ink">{stage.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">{stage.description}</p>
           </RevealItem>
@@ -726,6 +817,10 @@ function StaticReport({ t }: { t: Dictionary }) {
               {t.scrolly.card.commentLabel}
             </span>
             {t.scrolly.card.commentText}
+          </div>
+
+          <div className="mt-5 border-t border-dashed border-ink/12 pt-4 text-center font-display text-base italic text-terracotta">
+            {t.scrolly.closingTagline}
           </div>
         </RevealItem>
       </RevealGroup>

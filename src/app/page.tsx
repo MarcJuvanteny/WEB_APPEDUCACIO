@@ -5,6 +5,7 @@ import { ScrollytellingReport } from "@/components/sections/scrollytelling-repor
 import { Features } from "@/components/sections/features";
 import { Pricing } from "@/components/sections/pricing";
 import { Testimonials } from "@/components/sections/testimonials";
+import { ComingSoon } from "@/components/sections/coming-soon";
 import { FinalCta } from "@/components/sections/final-cta";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
         <Features />
         <Pricing />
         <Testimonials />
+        <ComingSoon />
         <FinalCta />
       </main>
       <Footer />
