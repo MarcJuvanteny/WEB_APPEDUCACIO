@@ -2,7 +2,6 @@
 
 import { motion, type Variants } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/language-provider";
-import { APP_URLS } from "@/lib/config";
 import { Button } from "@/components/ui/button";
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
@@ -50,7 +49,7 @@ export function Hero() {
         </motion.p>
 
         <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-6">
-          <Button href={APP_URLS.register} variant="primary">
+          <Button href="/preus" variant="primary">
             {t.hero.ctaPrimary}
           </Button>
           <a

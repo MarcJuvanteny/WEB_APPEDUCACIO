@@ -1,10 +1,10 @@
 "use client";
 
-import { UsersThreeIcon, TargetIcon, CalendarBlankIcon, WifiSlashIcon } from "@phosphor-icons/react";
+import { UsersThreeIcon, TargetIcon, CalendarBlankIcon, SparkleIcon } from "@phosphor-icons/react";
 import { useLanguage } from "@/lib/i18n/language-provider";
 import { RevealGroup, RevealItem } from "@/components/scroll-reveal";
 
-const ICONS = [UsersThreeIcon, TargetIcon, CalendarBlankIcon, WifiSlashIcon];
+const ICONS = [UsersThreeIcon, TargetIcon, CalendarBlankIcon, SparkleIcon];
 const SPANS = ["md:col-span-2", "md:col-span-1", "md:col-span-1", "md:col-span-2"];
 
 export function Features() {

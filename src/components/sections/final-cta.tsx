@@ -1,7 +1,6 @@
 "use client";
 
 import { useLanguage } from "@/lib/i18n/language-provider";
-import { APP_URLS } from "@/lib/config";
 import { RevealGroup, RevealItem } from "@/components/scroll-reveal";
 
 export function FinalCta() {
@@ -17,7 +16,7 @@ export function FinalCta() {
         </RevealItem>
         <RevealItem>
           <a
-            href={APP_URLS.register}
+            href="/preus"
             className="mt-9 inline-flex items-center justify-center rounded-sm bg-cream px-9 py-4 text-[0.95rem] font-bold text-terracotta transition-transform duration-150 ease-[var(--ease-out-strong)] active:scale-[0.97]"
           >
             {t.finalCta.cta}

@@ -63,6 +63,26 @@ export type Dictionary = {
     individual: { title: string; description: string; price: string; period: string; cta: string };
     centre: { title: string; description: string; price: string; cta: string };
   };
+  plansPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    individual: {
+      title: string;
+      description: string;
+      price: string;
+      period: string;
+      cta: string;
+      features: string[];
+    };
+    centre: {
+      title: string;
+      description: string;
+      badge: string;
+      note: string;
+      features: string[];
+    };
+  };
   testimonials: {
     eyebrow: string;
     items: { quote: string; author: string }[];
@@ -96,10 +116,10 @@ const ca: Dictionary = {
     eyebrow: "Gestió educativa per a mestres",
     title: "Cada alumne té una història. Dona-li el seguiment que es mereix.",
     subtitle:
-      "Competències, informes trimestrals i programació setmanal, alineats amb el Decret 175/2022 — tot en una aplicació pensada per a l'aula.",
-    ctaPrimary: "Prova SeJus gratis",
+      "Competències, informes trimestrals i programació setmanal, alineats amb el decret actual — tot en una aplicació pensada per a l'aula.",
+    ctaPrimary: "Prova SeJus",
     ctaSecondary: "Veure com funciona",
-    badges: ["Decret 175/2022", "Escala NA / AS / AN / AE", "Funciona sense wifi"],
+    badges: ["Escala NA / AS / AN / AE"],
     card: {
       eyebrow: "Cas fictici · exemple il·lustratiu",
       nameLabel: "Nom",
@@ -148,7 +168,7 @@ const ca: Dictionary = {
         eyebrow: "Juny",
         title: "Un informe que els pares llegiran de veritat.",
         description:
-          "L'informe final compara els tres trimestres, celebra les millores i assenyala de manera constructiva el que encara cal treballar — en un to proper i sense tecnicismes.",
+          "Una IA genera una primera versió de l'informe analitzant tots els comentaris, notes i patrons de l'alumne. El mestre la revisa i l'ajusta. L'informe final compara els tres trimestres, celebra les millores i assenyala de manera constructiva el que encara cal treballar — en un to proper i sense tecnicismes.",
       },
       {
         eyebrow: "Setembre següent",
@@ -229,9 +249,9 @@ const ca: Dictionary = {
           "Planifica la setmana i vincula cada activitat als criteris que treballa, sense fulls solts.",
       },
       {
-        title: "Funciona sense connexió",
+        title: "Informes amb ajuda d'IA",
         description:
-          "SeJus és una PWA: la instal·les al mòbil o la tauleta i segueix funcionant a l'aula sense wifi.",
+          "Una primera versió de l'informe trimestral, generada automàticament a partir dels comentaris i les notes, que el mestre revisa i signa.",
       },
     ],
   },
@@ -248,8 +268,42 @@ const ca: Dictionary = {
     centre: {
       title: "Centre",
       description: "Per a tota l'escola, amb coordinació entre cicles.",
-      price: "Parlem-ne",
-      cta: "Demana una demo",
+      price: "Properament",
+      cta: "T'avisarem quan estigui a punt.",
+    },
+  },
+  plansPage: {
+    eyebrow: "Preus",
+    title: "Tria com vols fer servir SeJus",
+    subtitle:
+      "Un pla senzill per a un sol mestre, i un pla de centre que estem preparant per a tota l'escola.",
+    individual: {
+      title: "Individual",
+      description: "Per a un sol mestre, amb totes les seves classes.",
+      price: "9 €",
+      period: "/ mes",
+      cta: "Comença ara",
+      features: [
+        "Alumnes i classes il·limitats",
+        "Competències i criteris alineats amb el decret actual",
+        "Escala NA / AS / AN / AE sempre a la vista",
+        "Programació setmanal vinculada als criteris",
+        "Informes trimestrals amb primera versió generada per IA",
+        "Historial complet de cada alumne, curs rere curs",
+        "Accés des del mòbil, la tauleta o l'ordinador",
+      ],
+    },
+    centre: {
+      title: "Centre",
+      description: "Per a tota l'escola, amb coordinació entre cicles.",
+      badge: "Properament",
+      note: "T'avisarem quan estigui a punt.",
+      features: [
+        "Tot el que inclou el pla Individual",
+        "Coordinació entre mestres i cicles",
+        "Panell de centre amb visió de conjunt",
+        "Formació i suport prioritari per a l'equip docent",
+      ],
     },
   },
   testimonials: {
@@ -279,7 +333,7 @@ const ca: Dictionary = {
   },
   finalCta: {
     title: "Cada alumne té una història. Dona-li el seguiment que es mereix.",
-    cta: "Prova SeJus gratis",
+    cta: "Prova SeJus",
   },
   footer: {
     tagline: "Cada nen, una història.",
@@ -304,9 +358,9 @@ const es: Dictionary = {
     title: "Cada alumno tiene una historia. Dale el seguimiento que se merece.",
     subtitle:
       "Competencias, informes trimestrales y programación semanal, alineados con el Decret 175/2022 — todo en una aplicación pensada para el aula.",
-    ctaPrimary: "Prueba SeJus gratis",
+    ctaPrimary: "Prueba SeJus",
     ctaSecondary: "Ver cómo funciona",
-    badges: ["Decret 175/2022", "Escala NA / AS / AN / AE", "Funciona sin wifi"],
+    badges: ["Escala NA / AS / AN / AE"],
     card: {
       eyebrow: "Caso ficticio · ejemplo ilustrativo",
       nameLabel: "Nombre",
@@ -355,7 +409,7 @@ const es: Dictionary = {
         eyebrow: "Junio",
         title: "Un informe que los padres leerán de verdad.",
         description:
-          "El informe final compara los tres trimestres, celebra las mejoras y señala de forma constructiva lo que todavía hay que trabajar — en un tono cercano y sin tecnicismos.",
+          "Una IA genera una primera versión del informe analizando todos los comentarios, notas y patrones del alumno. El maestro la revisa y la ajusta. El informe final compara los tres trimestres, celebra las mejoras y señala de forma constructiva lo que todavía hay que trabajar — en un tono cercano y sin tecnicismos.",
       },
       {
         eyebrow: "Septiembre siguiente",
@@ -436,9 +490,9 @@ const es: Dictionary = {
           "Planifica la semana y vincula cada actividad a los criterios que trabaja, sin hojas sueltas.",
       },
       {
-        title: "Funciona sin conexión",
+        title: "Informes con ayuda de IA",
         description:
-          "SeJus es una PWA: la instalas en el móvil o la tableta y sigue funcionando en el aula sin wifi.",
+          "Una primera versión del informe trimestral, generada automáticamente a partir de los comentarios y las notas, que el maestro revisa y firma.",
       },
     ],
   },
@@ -455,8 +509,42 @@ const es: Dictionary = {
     centre: {
       title: "Centro",
       description: "Para todo el colegio, con coordinación entre ciclos.",
-      price: "Hablemos",
-      cta: "Pide una demo",
+      price: "Próximamente",
+      cta: "Te avisaremos cuando esté listo.",
+    },
+  },
+  plansPage: {
+    eyebrow: "Precios",
+    title: "Elige cómo quieres usar SeJus",
+    subtitle:
+      "Un plan sencillo para un solo maestro, y un plan de centro que estamos preparando para todo el colegio.",
+    individual: {
+      title: "Individual",
+      description: "Para un solo maestro, con todas sus clases.",
+      price: "9 €",
+      period: "/ mes",
+      cta: "Empieza ahora",
+      features: [
+        "Alumnado y clases ilimitados",
+        "Competencias y criterios alineados con el decreto actual",
+        "Escala NA / AS / AN / AE siempre a la vista",
+        "Programación semanal vinculada a los criterios",
+        "Informes trimestrales con primera versión generada por IA",
+        "Historial completo de cada alumno, curso tras curso",
+        "Acceso desde el móvil, la tableta o el ordenador",
+      ],
+    },
+    centre: {
+      title: "Centro",
+      description: "Para todo el colegio, con coordinación entre ciclos.",
+      badge: "Próximamente",
+      note: "Te avisaremos cuando esté listo.",
+      features: [
+        "Todo lo que incluye el plan Individual",
+        "Coordinación entre maestros y ciclos",
+        "Panel de centro con visión de conjunto",
+        "Formación y soporte prioritario para el equipo docente",
+      ],
     },
   },
   testimonials: {
@@ -486,7 +574,7 @@ const es: Dictionary = {
   },
   finalCta: {
     title: "Cada alumno tiene una historia. Dale el seguimiento que se merece.",
-    cta: "Prueba SeJus gratis",
+    cta: "Prueba SeJus",
   },
   footer: {
     tagline: "Cada niño, una historia.",

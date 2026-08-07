@@ -43,12 +43,7 @@ export function Pricing() {
             <h3 className="font-display text-xl">{t.pricing.centre.title}</h3>
             <p className="mt-2 text-sm text-white/65">{t.pricing.centre.description}</p>
             <div className="mt-6 font-display text-3xl">{t.pricing.centre.price}</div>
-            <a
-              href="#"
-              className="mt-6 inline-flex items-center justify-center rounded-sm bg-white px-5 py-2.5 text-[0.95rem] font-medium text-ink transition-transform duration-150 ease-[var(--ease-out-strong)] active:scale-[0.97]"
-            >
-              {t.pricing.centre.cta}
-            </a>
+            <p className="mt-6 text-sm text-white/50">{t.pricing.centre.cta}</p>
           </RevealItem>
         </RevealGroup>
       </div>
