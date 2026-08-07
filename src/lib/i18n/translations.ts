@@ -96,7 +96,7 @@ const ca: Dictionary = {
     eyebrow: "Gestió educativa per a mestres",
     title: "Cada alumne té una història. Dona-li el seguiment que es mereix.",
     subtitle:
-      "Competències, informes trimestrals i programació setmanal, alineats amb el Decret 175/2022 — tot en una aplicació pensada per a l'aula, no per a l'administració.",
+      "Competències, informes trimestrals i programació setmanal, alineats amb el Decret 175/2022 — tot en una aplicació pensada per a l'aula.",
     ctaPrimary: "Prova SeJus gratis",
     ctaSecondary: "Veure com funciona",
     badges: ["Decret 175/2022", "Escala NA / AS / AN / AE", "Funciona sense wifi"],
@@ -118,13 +118,13 @@ const ca: Dictionary = {
         eyebrow: "Setembre",
         title: "Un curs nou comença en tres minuts.",
         description:
-          "El mestre arriba al setembre amb una classe nova. SeJus li permet tenir tots els alumnes configurats en minuts. Sense Excels, sense paper, sense configuracions complexes.",
+          "El mestre arriba al setembre amb una classe nova. SeJus li permet tenir tots els alumnes configurats en minuts.",
       },
       {
         eyebrow: "Octubre – Novembre",
-        title: "Saps com va cada alumne abans que ell mateix s'adoni.",
+        title: "Saps com va cada alumne abans que ell mateix se n'adoni.",
         description:
-          "En el moment que el mestre introdueix les primeres notes, el gràfic d'aranya ja mostra qui va bé i qui necessita atenció. No cal esperar al final del trimestre per veure-ho.",
+          "En el moment que el mestre introdueix les primeres notes, el gràfic d'aranya ja mostra la seva evolució.",
       },
       {
         eyebrow: "Desembre",
@@ -303,7 +303,7 @@ const es: Dictionary = {
     eyebrow: "Gestión educativa para maestros",
     title: "Cada alumno tiene una historia. Dale el seguimiento que se merece.",
     subtitle:
-      "Competencias, informes trimestrales y programación semanal, alineados con el Decret 175/2022 — todo en una aplicación pensada para el aula, no para la administración.",
+      "Competencias, informes trimestrales y programación semanal, alineados con el Decret 175/2022 — todo en una aplicación pensada para el aula.",
     ctaPrimary: "Prueba SeJus gratis",
     ctaSecondary: "Ver cómo funciona",
     badges: ["Decret 175/2022", "Escala NA / AS / AN / AE", "Funciona sin wifi"],
@@ -325,13 +325,13 @@ const es: Dictionary = {
         eyebrow: "Septiembre",
         title: "Un curso nuevo empieza en tres minutos.",
         description:
-          "El maestro llega en septiembre con una clase nueva. SeJus le permite tener a todo el alumnado configurado en minutos. Sin Excels, sin papel, sin configuraciones complejas.",
+          "El maestro llega en septiembre con una clase nueva. SeJus le permite tener a todo el alumnado configurado en minutos.",
       },
       {
         eyebrow: "Octubre – Noviembre",
         title: "Sabes cómo va cada alumno antes de que él mismo se dé cuenta.",
         description:
-          "En el momento en que el maestro introduce las primeras notas, el gráfico de araña ya muestra quién va bien y quién necesita atención. No hace falta esperar al final del trimestre para verlo.",
+          "En el momento en que el maestro introduce las primeras notas, el gráfico de araña ya muestra su evolución.",
       },
       {
         eyebrow: "Diciembre",

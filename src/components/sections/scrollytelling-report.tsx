@@ -325,15 +325,20 @@ function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
       )}
 
       {visibleInfos.length > 0 && (
-        <div className={compact ? "mb-3 grid grid-cols-2 gap-1.5" : "mb-4 flex flex-col gap-1.5"}>
+        <motion.div
+          layout
+          transition={{ duration: 0.45, ease: EASE_OUT }}
+          className={compact ? "mb-3 grid grid-cols-2 gap-1.5" : "mb-4 flex flex-col gap-1.5"}
+        >
           {infos.map(
             (info, i) =>
               info.visible && (
                 <motion.div
                   key={i}
+                  layout
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.32, ease: EASE_OUT }}
+                  transition={{ layout: { duration: 0.45, ease: EASE_OUT }, duration: 0.32, ease: EASE_OUT }}
                   className="flex items-center justify-between rounded-sm bg-cream px-2.5 py-1.5"
                 >
                   <span className="truncate text-[0.74rem] text-ink">{t.criteria[i]}</span>
@@ -346,14 +351,15 @@ function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
                 </motion.div>
               ),
           )}
-        </div>
+        </motion.div>
       )}
 
       {showRadar && (
         <motion.svg
+          layout
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.35, ease: EASE_OUT }}
+          transition={{ layout: { duration: 0.45, ease: EASE_OUT }, opacity: { duration: 0.35, ease: EASE_OUT } }}
           viewBox="0 0 220 200"
           className="mb-1 w-full"
           style={{ height: compact ? 150 : 190 }}
@@ -541,10 +547,10 @@ function FolderCloud({ t }: { t: CardDict }) {
         initial={{ opacity: 0, y: 12, scale: 0.92 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: EASE_OUT, delay: 0.12 }}
-        className="relative flex h-[170px] w-[170px] items-center justify-center"
+        className="relative flex h-[320px] w-[320px] items-center justify-center"
       >
-        <FolderIcon size={116} weight="regular" className="text-ink-soft/55" />
-        <CloudIcon size={44} weight="regular" className="absolute -top-3 right-3 text-sage" />
+        <FolderIcon size={260} weight="regular" className="text-ink-soft/55" />
+        <CloudIcon size={100} weight="regular" className="absolute -top-6 right-0 text-sage" />
       </motion.div>
 
       <motion.div
@@ -604,7 +610,7 @@ function DocumentStackReveal({ t }: { t: CardDict }) {
         {t.climaxLabel}
       </motion.span>
 
-      <div className="relative mx-auto" style={{ width: 260, height: 320 }}>
+      <div className="relative mx-auto" style={{ width: 280, height: 360 }}>
         <AnimatePresence mode="wait">
           {!revealed ? (
             <motion.div
@@ -681,7 +687,7 @@ function ReportThumbnail({ t }: { t: CardDict }) {
   return (
     <div
       className="box-border overflow-hidden rounded-xl border border-ink/10 bg-surface p-[22px] shadow-[0_8px_24px_rgba(43,36,32,0.12)]"
-      style={{ width: 260, height: 320 }}
+      style={{ width: 280, height: 360 }}
     >
       <div className="text-[0.62rem] uppercase tracking-wide text-ink-soft/70">{t.piece1.eyebrow}</div>
       <div className="mt-1 font-display text-lg text-ink">{t.piece1.name}</div>
