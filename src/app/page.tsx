@@ -7,6 +7,7 @@ import { Pricing } from "@/components/sections/pricing";
 import { Testimonials } from "@/components/sections/testimonials";
 import { ComingSoon } from "@/components/sections/coming-soon";
 import { FinalCta } from "@/components/sections/final-cta";
+import { ContactForm } from "@/components/sections/contact-form";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <Testimonials />
         <ComingSoon />
         <FinalCta />
+        <ContactForm />
       </main>
       <Footer />
     </>

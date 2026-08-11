@@ -19,7 +19,7 @@ import {
 } from "@/lib/scrollytelling-report-math";
 
 const STAGE_COUNT = 7;
-const STAGE_MAX = STAGE_COUNT - 1;
+export const STAGE_MAX = STAGE_COUNT - 1;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 const listVariants: Variants = {
@@ -175,7 +175,7 @@ type CardDict = Dictionary["scrolly"]["card"];
  * moments and use a fade + small vertical shift when swapping in, per the
  * "never an instant cut" rule.
  */
-function FichaColumn({
+export function FichaColumn({
   t,
   stageFloat,
   activeStage,
@@ -297,10 +297,14 @@ function FichaColumn({
 function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
   const infos = CRITERIA_HISTORIES.map((history) => criterionInfo(history, stageFloat));
   const visibleInfos = infos.filter((info) => info.visible);
-  const showEmpty = stageFloat < 0.6;
+  // Layout-affecting decisions (grid columns, radar height) wait until an
+  // item is more than half faded in, so the reflow lands once it already
+  // reads as "there" instead of firing the instant it starts to appear.
+  const settledCount = infos.filter((info) => info.opacity >= 0.5).length;
+  const showEmpty = stageFloat < 0.9;
   const showRadar = stageFloat >= 0.35;
   const showComment = stageFloat >= 1.5;
-  const compact = visibleInfos.length >= 3;
+  const compact = settledCount >= 3;
 
   const radarPoints = infos
     .map((info, i) => {
@@ -313,16 +317,19 @@ function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
 
   return (
     <>
-      {showEmpty && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: EASE_OUT }}
-          className="border-t border-dashed border-ink/12 py-7 text-sm text-ink-soft/70"
-        >
-          {t.emptyState}
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {showEmpty && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0.5, ease: EASE_OUT } }}
+            transition={{ duration: 0.4, ease: EASE_OUT }}
+            className="border-t border-dashed border-ink/12 py-7 text-sm text-ink-soft/70"
+          >
+            {t.emptyState}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {visibleInfos.length > 0 && (
         <motion.div
@@ -336,9 +343,10 @@ function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
                 <motion.div
                   key={i}
                   layout
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ layout: { duration: 0.45, ease: EASE_OUT }, duration: 0.32, ease: EASE_OUT }}
+                  initial={{ y: 8 }}
+                  animate={{ y: 0 }}
+                  style={{ opacity: info.opacity }}
+                  transition={{ layout: { duration: 0.45, ease: EASE_OUT }, y: { duration: 0.32, ease: EASE_OUT } }}
                   className="flex items-center justify-between rounded-sm bg-cream px-2.5 py-1.5"
                 >
                   <span className="truncate text-[0.74rem] text-ink">{t.criteria[i]}</span>

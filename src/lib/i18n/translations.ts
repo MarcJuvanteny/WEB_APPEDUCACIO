@@ -94,6 +94,22 @@ export type Dictionary = {
     note: string;
   };
   finalCta: { title: string; cta: string };
+  contact: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    schoolLabel: string;
+    schoolPlaceholder: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    submitCta: string;
+    successTitle: string;
+    successMessage: string;
+  };
   footer: {
     tagline: string;
     primaryLinks: string[];
@@ -335,6 +351,22 @@ const ca: Dictionary = {
     title: "Cada alumne té una història. Dona-li el seguiment que es mereix.",
     cta: "Prova SeJus",
   },
+  contact: {
+    eyebrow: "Contacte",
+    title: "Tens dubtes o vols provar-ho amb la teva escola?",
+    subtitle: "Explica'ns el teu cas i et respondrem en menys de 48 hores.",
+    nameLabel: "Nom",
+    namePlaceholder: "El teu nom",
+    emailLabel: "Email",
+    emailPlaceholder: "tu@escola.cat",
+    schoolLabel: "Centre educatiu (opcional)",
+    schoolPlaceholder: "Nom de l'escola",
+    messageLabel: "Missatge",
+    messagePlaceholder: "Explica'ns què necessites o quin dubte tens…",
+    submitCta: "Envia la consulta",
+    successTitle: "Gràcies!",
+    successMessage: "Hem rebut el teu missatge. Et respondrem en menys de 48 hores.",
+  },
   footer: {
     tagline: "Cada nen, una història.",
     primaryLinks: ["Funcionalitats", "Preus", "Contacte"],
@@ -575,6 +607,22 @@ const es: Dictionary = {
   finalCta: {
     title: "Cada alumno tiene una historia. Dale el seguimiento que se merece.",
     cta: "Prueba SeJus",
+  },
+  contact: {
+    eyebrow: "Contacto",
+    title: "¿Tienes dudas o quieres probarlo con tu colegio?",
+    subtitle: "Cuéntanos tu caso y te responderemos en menos de 48 horas.",
+    nameLabel: "Nombre",
+    namePlaceholder: "Tu nombre",
+    emailLabel: "Email",
+    emailPlaceholder: "tu@colegio.es",
+    schoolLabel: "Centro educativo (opcional)",
+    schoolPlaceholder: "Nombre del colegio",
+    messageLabel: "Mensaje",
+    messagePlaceholder: "Cuéntanos qué necesitas o qué duda tienes…",
+    submitCta: "Enviar consulta",
+    successTitle: "¡Gracias!",
+    successMessage: "Hemos recibido tu mensaje. Te responderemos en menos de 48 horas.",
   },
   footer: {
     tagline: "Cada niño, una historia.",
