@@ -15,6 +15,9 @@
   --color-sage-hover: #465a39;
   --color-sage-tint: #e6ebe1;
 
+  --color-sky: #3d6a8f;
+  --color-sky-tint: #e2ebf1;
+
   --color-cream-deep: #efe8da;
 }
 
@@ -32,6 +35,9 @@
   --color-sage: var(--color-sage);
   --color-sage-hover: var(--color-sage-hover);
   --color-sage-tint: var(--color-sage-tint);
+
+  --color-sky: var(--color-sky);
+  --color-sky-tint: var(--color-sky-tint);
 
   --color-cream-deep: var(--color-cream-deep);
 

@@ -13,10 +13,30 @@ const FIELD_CLASS =
 export function ContactForm() {
   const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError(false);
+
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("send_failed");
+      setSubmitted(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -104,11 +124,17 @@ export function ContactForm() {
                     className={`${FIELD_CLASS} resize-none`}
                   />
                 </label>
+                {error && (
+                  <p className="text-sm text-terracotta" role="alert">
+                    {t.contact.errorMessage}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="mt-2 inline-flex items-center justify-center rounded-sm bg-terracotta px-6 py-3 text-[0.95rem] font-medium text-cream shadow-[0_10px_24px_-14px_rgba(181,86,47,0.7)] transition-[transform,background-color] duration-150 ease-[var(--ease-out-strong)] hover:bg-terracotta-hover active:scale-[0.97]"
+                  disabled={sending}
+                  className="mt-2 inline-flex items-center justify-center rounded-sm bg-terracotta px-6 py-3 text-[0.95rem] font-medium text-cream shadow-[0_10px_24px_-14px_rgba(181,86,47,0.7)] transition-[transform,background-color] duration-150 ease-[var(--ease-out-strong)] hover:bg-terracotta-hover active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {t.contact.submitCta}
+                  {sending ? t.contact.sendingCta : t.contact.submitCta}
                 </button>
               </motion.form>
             )}

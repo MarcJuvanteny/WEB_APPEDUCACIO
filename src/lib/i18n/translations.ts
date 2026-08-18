@@ -67,6 +67,14 @@ export type Dictionary = {
     eyebrow: string;
     title: string;
     subtitle: string;
+    stage: {
+      prompt: string;
+      infantil: string;
+      primaria: string;
+      eso: string;
+      available: string;
+      soon: string;
+    };
     individual: {
       title: string;
       description: string;
@@ -107,6 +115,8 @@ export type Dictionary = {
     messageLabel: string;
     messagePlaceholder: string;
     submitCta: string;
+    sendingCta: string;
+    errorMessage: string;
     successTitle: string;
     successMessage: string;
   };
@@ -293,6 +303,14 @@ const ca: Dictionary = {
     title: "Tria com vols fer servir SeJus",
     subtitle:
       "Un pla senzill per a un sol mestre, i un pla de centre que estem preparant per a tota l'escola.",
+    stage: {
+      prompt: "Per a quina etapa vols SeJus?",
+      infantil: "Infantil",
+      primaria: "Primària",
+      eso: "ESO",
+      available: "Disponible",
+      soon: "Properament",
+    },
     individual: {
       title: "Individual",
       description: "Per a un sol mestre, amb totes les seves classes.",
@@ -364,6 +382,8 @@ const ca: Dictionary = {
     messageLabel: "Missatge",
     messagePlaceholder: "Explica'ns què necessites o quin dubte tens…",
     submitCta: "Envia la consulta",
+    sendingCta: "Enviant…",
+    errorMessage: "No s'ha pogut enviar el missatge. Torna-ho a provar en uns minuts.",
     successTitle: "Gràcies!",
     successMessage: "Hem rebut el teu missatge. Et respondrem en menys de 48 hores.",
   },
@@ -550,6 +570,14 @@ const es: Dictionary = {
     title: "Elige cómo quieres usar SeJus",
     subtitle:
       "Un plan sencillo para un solo maestro, y un plan de centro que estamos preparando para todo el colegio.",
+    stage: {
+      prompt: "¿Para qué etapa quieres SeJus?",
+      infantil: "Infantil",
+      primaria: "Primaria",
+      eso: "ESO",
+      available: "Disponible",
+      soon: "Próximamente",
+    },
     individual: {
       title: "Individual",
       description: "Para un solo maestro, con todas sus clases.",
@@ -621,6 +649,8 @@ const es: Dictionary = {
     messageLabel: "Mensaje",
     messagePlaceholder: "Cuéntanos qué necesitas o qué duda tienes…",
     submitCta: "Enviar consulta",
+    sendingCta: "Enviando…",
+    errorMessage: "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
     successTitle: "¡Gracias!",
     successMessage: "Hemos recibido tu mensaje. Te responderemos en menos de 48 horas.",
   },
