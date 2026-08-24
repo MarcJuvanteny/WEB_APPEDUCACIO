@@ -9,7 +9,6 @@ export type Dictionary = {
     title: string;
     subtitle: string;
     ctaPrimary: string;
-    ctaSecondary: string;
     badges: string[];
     card: {
       eyebrow: string;
@@ -144,7 +143,6 @@ const ca: Dictionary = {
     subtitle:
       "Competències, informes trimestrals i programació setmanal, alineats amb el decret actual — tot en una aplicació pensada per a l'aula.",
     ctaPrimary: "Prova SeJus",
-    ctaSecondary: "Veure com funciona",
     badges: ["Escala NA / AS / AN / AE"],
     card: {
       eyebrow: "Cas fictici · exemple il·lustratiu",
@@ -411,7 +409,6 @@ const es: Dictionary = {
     subtitle:
       "Competencias, informes trimestrales y programación semanal, alineados con el Decret 175/2022 — todo en una aplicación pensada para el aula.",
     ctaPrimary: "Prueba SeJus",
-    ctaSecondary: "Ver cómo funciona",
     badges: ["Escala NA / AS / AN / AE"],
     card: {
       eyebrow: "Caso ficticio · ejemplo ilustrativo",

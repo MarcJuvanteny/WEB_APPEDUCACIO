@@ -52,13 +52,6 @@ export function Hero() {
           <Button href="/preus" variant="primary">
             {t.hero.ctaPrimary}
           </Button>
-          <a
-            href="#scrollytelling"
-            className="inline-flex items-center gap-1.5 border-b border-ink/30 pb-0.5 text-[0.95rem] font-medium text-ink transition-colors duration-150 hover:border-terracotta hover:text-terracotta"
-          >
-            {t.hero.ctaSecondary}
-            <span aria-hidden="true">→</span>
-          </a>
         </motion.div>
 
         <motion.div variants={item} className="mt-9 flex flex-wrap gap-3">
