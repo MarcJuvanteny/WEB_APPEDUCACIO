@@ -10,6 +10,8 @@ const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const FIELD_CLASS =
   "w-full rounded-sm border border-ink/15 bg-cream px-4 py-3 text-sm text-ink placeholder:text-ink-soft/50 outline-none transition-colors duration-150 focus:border-terracotta/60";
 
+const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
 export function ContactForm() {
   const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
@@ -18,17 +20,24 @@ export function ContactForm() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!FORMSPREE_ENDPOINT) {
+      console.error("NEXT_PUBLIC_FORMSPREE_ENDPOINT is not set");
+      setError(true);
+      return;
+    }
+
     setSending(true);
     setError(false);
 
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form));
+    const data = new FormData(form);
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: { Accept: "application/json" },
+        body: data,
       });
       if (!res.ok) throw new Error("send_failed");
       setSubmitted(true);
