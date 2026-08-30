@@ -34,7 +34,7 @@ export function Features() {
                 key={index}
                 className={`${SPANS[index]} rounded-card border border-ink/10 bg-cream p-8 transition-[transform,border-color] duration-200 ease-[var(--ease-out-strong)] hover:-translate-y-1 hover:border-terracotta/25`}
               >
-                <Icon size={26} weight="regular" className="text-sage" />
+                <Icon size={26} weight="regular" className="text-sage" aria-hidden="true" />
                 <h3 className="mt-5 font-display text-xl tracking-tight text-ink">{item.title}</h3>
                 <p className="mt-2.5 max-w-[42ch] leading-relaxed text-ink-soft">{item.description}</p>
               </RevealItem>

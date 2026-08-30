@@ -11,7 +11,7 @@ export function ComingSoon() {
     <section className="mx-auto max-w-6xl px-6 py-20 md:py-24">
       <RevealGroup className="mx-auto flex max-w-2xl flex-col items-center gap-5 rounded-card border border-dashed border-sage/30 bg-sage-tint/40 px-8 py-14 text-center">
         <RevealItem>
-          <CloudCheckIcon size={30} weight="regular" className="text-sage" />
+          <CloudCheckIcon size={30} weight="regular" className="text-sage" aria-hidden="true" />
         </RevealItem>
         <RevealItem>
           <span className="text-sm font-medium uppercase tracking-wide text-sage">

@@ -10,9 +10,9 @@ export function Testimonials() {
     <section className="mx-auto max-w-6xl px-6 py-24 md:py-32">
       <RevealGroup>
         <RevealItem>
-          <span className="block text-center text-sm font-medium uppercase tracking-wide text-terracotta">
+          <h2 className="block text-center text-sm font-medium uppercase tracking-wide text-terracotta">
             {t.testimonials.eyebrow}
-          </span>
+          </h2>
         </RevealItem>
       </RevealGroup>
 

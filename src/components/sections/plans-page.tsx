@@ -88,7 +88,7 @@ export function PlansPage() {
             <ul className="mt-9 flex flex-col gap-3.5 border-t border-ink/10 pt-8">
               {individual.features.map((feature) => (
                 <li key={feature} className="flex items-start gap-2.5 text-sm text-ink-soft">
-                  <CheckIcon size={18} weight="bold" className="mt-0.5 shrink-0 text-sage" />
+                  <CheckIcon size={18} weight="bold" className="mt-0.5 shrink-0 text-sage" aria-hidden="true" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -107,7 +107,7 @@ export function PlansPage() {
             <ul className="mt-9 flex flex-col gap-3.5 border-t border-white/15 pt-8">
               {centre.features.map((feature) => (
                 <li key={feature} className="flex items-start gap-2.5 text-sm text-white/70">
-                  <CheckIcon size={18} weight="bold" className="mt-0.5 shrink-0 text-white/50" />
+                  <CheckIcon size={18} weight="bold" className="mt-0.5 shrink-0 text-white/50" aria-hidden="true" />
                   <span>{feature}</span>
                 </li>
               ))}

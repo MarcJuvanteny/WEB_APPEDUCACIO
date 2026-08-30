@@ -108,9 +108,9 @@ function ScrollytellingReportScene({ t }: { t: Dictionary }) {
                 <div className="mb-3 text-[0.8rem] font-semibold uppercase tracking-wide text-sage">
                   {stage.eyebrow}
                 </div>
-                <h3 className="mb-3.5 max-w-[460px] font-display text-3xl leading-tight text-ink md:text-4xl">
+                <h2 className="mb-3.5 max-w-[460px] font-display text-3xl leading-tight text-ink md:text-4xl">
                   {stage.title}
-                </h3>
+                </h2>
                 <p className="max-w-[420px] text-base leading-relaxed text-ink-soft">
                   {stage.description}
                 </p>
@@ -152,6 +152,8 @@ function TimelineRail({ months, stageFloat }: { months: string[]; stageFloat: nu
               {month}
             </span>
             <span
+              role="img"
+              aria-label={month}
               className="block h-1.5 w-1.5 shrink-0 rounded-full transition-all duration-300"
               style={{
                 background: active ? "var(--color-terracotta)" : "rgba(43,36,32,0.22)",
@@ -365,6 +367,8 @@ function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
       {showRadar && (
         <motion.svg
           layout
+          role="img"
+          aria-label={t.radarLabel}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ layout: { duration: 0.45, ease: EASE_OUT }, opacity: { duration: 0.35, ease: EASE_OUT } }}
@@ -372,6 +376,7 @@ function FichaCoreBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
           className="mb-1 w-full"
           style={{ height: compact ? 150 : 190 }}
         >
+          <title>{t.radarLabel}</title>
           <polygon points={polygonPoints(0.33)} fill="none" stroke="rgba(43,36,32,0.12)" strokeWidth={1} />
           <polygon points={polygonPoints(0.66)} fill="none" stroke="rgba(43,36,32,0.12)" strokeWidth={1} />
           <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.15)" strokeWidth={1} />
@@ -436,7 +441,8 @@ function ProgressBody({ t, stageFloat }: { t: CardDict; stageFloat: number }) {
     <>
       <div className="mb-3 text-[0.68rem] uppercase tracking-wide text-terracotta">{t.evolutionLabel}</div>
 
-      <svg viewBox="0 0 220 200" className="w-full" style={{ height: 200 }}>
+      <svg viewBox="0 0 220 200" className="w-full" style={{ height: 200 }} role="img" aria-label={t.radarLabel}>
+        <title>{t.radarLabel}</title>
         <polygon points={polygonPoints(0.33)} fill="none" stroke="rgba(43,36,32,0.1)" strokeWidth={1} />
         <polygon points={polygonPoints(0.66)} fill="none" stroke="rgba(43,36,32,0.1)" strokeWidth={1} />
         <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.13)" strokeWidth={1} />
@@ -515,7 +521,7 @@ function DevicesBody({ t }: { t: CardDict }) {
         >
           <div className="p-3">
             <div className="mb-2 font-display text-[0.8rem] text-ink">{t.name}</div>
-            <svg viewBox="0 0 220 200" className="mx-auto h-[62px] w-[68px]">
+            <svg viewBox="0 0 220 200" className="mx-auto h-[62px] w-[68px]" aria-hidden="true">
               <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.15)" strokeWidth={2} />
               <polygon
                 points="110,44 178,86 152,164 68,164 42,86"
@@ -555,10 +561,12 @@ function FolderCloud({ t }: { t: CardDict }) {
         initial={{ opacity: 0, y: 12, scale: 0.92 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: EASE_OUT, delay: 0.12 }}
+        role="img"
+        aria-label={t.folderIllustrationLabel}
         className="relative flex h-[320px] w-[320px] items-center justify-center"
       >
-        <FolderIcon size={260} weight="regular" className="text-ink-soft/55" />
-        <CloudIcon size={100} weight="regular" className="absolute -top-6 right-0 text-sage" />
+        <FolderIcon size={260} weight="regular" className="text-ink-soft/55" aria-hidden="true" />
+        <CloudIcon size={100} weight="regular" className="absolute -top-6 right-0 text-sage" aria-hidden="true" />
       </motion.div>
 
       <motion.div
@@ -701,7 +709,7 @@ function ReportThumbnail({ t }: { t: CardDict }) {
       <div className="mt-1 font-display text-lg text-ink">{t.piece1.name}</div>
       <div className="mb-4 text-xs text-ink-soft/70">{t.piece1.meta}</div>
       <div className="mb-4 flex items-center gap-4">
-        <svg viewBox="0 0 220 200" className="h-[76px] w-[84px] shrink-0">
+        <svg viewBox="0 0 220 200" className="h-[76px] w-[84px] shrink-0" aria-hidden="true">
           <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.15)" strokeWidth={2} />
           <motion.polygon
             points="110,44 178,86 152,164 68,164 42,86"
@@ -802,7 +810,14 @@ function StaticReport({ t }: { t: Dictionary }) {
             ))}
           </div>
 
-          <svg viewBox="0 0 220 200" className="mb-2 w-full" style={{ height: 200 }}>
+          <svg
+            viewBox="0 0 220 200"
+            className="mb-2 w-full"
+            style={{ height: 200 }}
+            role="img"
+            aria-label={t.scrolly.card.radarLabel}
+          >
+            <title>{t.scrolly.card.radarLabel}</title>
             <polygon points={polygonPoints(0.33)} fill="none" stroke="rgba(43,36,32,0.12)" strokeWidth={1} />
             <polygon points={polygonPoints(0.66)} fill="none" stroke="rgba(43,36,32,0.12)" strokeWidth={1} />
             <polygon points={polygonPoints(1)} fill="none" stroke="rgba(43,36,32,0.15)" strokeWidth={1} />

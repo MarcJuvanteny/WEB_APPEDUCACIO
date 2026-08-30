@@ -8,6 +8,7 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { ComingSoon } from "@/components/sections/coming-soon";
 import { FinalCta } from "@/components/sections/final-cta";
 import { ContactForm } from "@/components/sections/contact-form";
+import { Faq } from "@/components/sections/faq";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <ComingSoon />
         <FinalCta />
         <ContactForm />
+        <Faq />
       </main>
       <Footer />
     </>

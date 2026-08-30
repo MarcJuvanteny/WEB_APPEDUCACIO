@@ -49,6 +49,8 @@ export type Dictionary = {
       stats: { competencies: string; trimestres: string; cursComplet: string };
       archiveCaption: string;
       returnNote: string;
+      radarLabel: string;
+      folderIllustrationLabel: string;
     };
   };
   features: {
@@ -119,10 +121,15 @@ export type Dictionary = {
     successTitle: string;
     successMessage: string;
   };
+  faq: {
+    eyebrow: string;
+    title: string;
+    items: { question: string; answer: string }[];
+  };
   footer: {
     tagline: string;
     primaryLinks: string[];
-    legalLinks: string[];
+    legalLinks: { label: string; href: string }[];
     rights: string;
   };
 };
@@ -141,7 +148,7 @@ const ca: Dictionary = {
     eyebrow: "Gestió educativa per a mestres",
     title: "Cada alumne té una història. Dona-li el seguiment que es mereix.",
     subtitle:
-      "Competències, informes trimestrals i programació setmanal, alineats amb el decret actual — tot en una aplicació pensada per a l'aula.",
+      "Avaluació per competències, informes trimestrals i seguiment de l'alumnat, alineats amb el Decret 175/2022 — la gestió d'aula digital pensada per a mestres de Catalunya.",
     ctaPrimary: "Prova SeJus",
     badges: ["Escala NA / AS / AN / AE"],
     card: {
@@ -251,6 +258,9 @@ const ca: Dictionary = {
       archiveCaption: "Historial dels tres trimestres, guardat",
       returnNote:
         "L'historial no es perd: el proper mestre el trobarà tot a punt el setembre següent.",
+      radarLabel: "Gràfic de radar amb el nivell assolit a cada competència",
+      folderIllustrationLabel:
+        "Il·lustració d'una carpeta amb un núvol, representant una funcionalitat encara en desenvolupament",
     },
   },
   features: {
@@ -385,10 +395,45 @@ const ca: Dictionary = {
     successTitle: "Gràcies!",
     successMessage: "Hem rebut el teu missatge. Et respondrem en menys de 48 hores.",
   },
+  faq: {
+    eyebrow: "Preguntes freqüents",
+    title: "Tot el que un mestre es pregunta abans de començar",
+    items: [
+      {
+        question: "Què és l'avaluació per competències?",
+        answer:
+          "És un model d'avaluació que valora el que l'alumnat sap fer amb els seus coneixements, no només si els recorda. A Catalunya es mesura amb l'escala NA / AS / AN / AE per a cada competència, i és la base de la programació setmanal i dels informes trimestrals a primària.",
+      },
+      {
+        question: "SeJus és compatible amb el Decret 175/2022?",
+        answer:
+          "Sí. Les competències, els criteris d'avaluació i l'escala NA / AS / AN / AE que fa servir SeJus estan alineats amb el Decret 175/2022 d'ordenació dels ensenyaments de l'educació bàsica a Catalunya.",
+      },
+      {
+        question: "Per a quines etapes educatives està disponible SeJus?",
+        answer:
+          "Ara mateix SeJus està disponible per a Primària. L'aplicació per a Infantil està en desenvolupament, i la d'ESO encara no l'hem començat — pots deixar-nos el teu contacte i t'avisarem quan estiguin a punt.",
+      },
+      {
+        question: "Com funcionen els informes trimestrals amb IA?",
+        answer:
+          "SeJus analitza les notes i comentaris que el mestre ha anat introduint durant el trimestre i en genera una primera versió de l'informe, amb un to proper i sense tecnicismes. El mestre sempre la revisa, l'ajusta i la signa abans d'enviar-la a les famílies.",
+      },
+      {
+        question: "Quant costa SeJus?",
+        answer:
+          "El pla Individual, per a un sol mestre amb totes les seves classes, costa 9 € al mes. El pla de Centre, pensat per a tota l'escola amb coordinació entre cicles, estarà disponible properament.",
+      },
+    ],
+  },
   footer: {
     tagline: "Cada nen, una història.",
     primaryLinks: ["Funcionalitats", "Preus", "Contacte"],
-    legalLinks: ["Política de privacitat", "Avís legal", "Termes d'ús"],
+    legalLinks: [
+      { label: "Política de privacitat", href: "/politica-privacitat" },
+      { label: "Avís legal", href: "/avis-legal" },
+      { label: "Termes d'ús", href: "/termes-us" },
+    ],
     rights: "© 2026 SeJus",
   },
 };
@@ -407,7 +452,7 @@ const es: Dictionary = {
     eyebrow: "Gestión educativa para maestros",
     title: "Cada alumno tiene una historia. Dale el seguimiento que se merece.",
     subtitle:
-      "Competencias, informes trimestrales y programación semanal, alineados con el Decret 175/2022 — todo en una aplicación pensada para el aula.",
+      "Evaluación por competencias, informes trimestrales y seguimiento del alumnado, alineados con el Decret 175/2022 — la gestión de aula digital pensada para maestros de Cataluña.",
     ctaPrimary: "Prueba SeJus",
     badges: ["Escala NA / AS / AN / AE"],
     card: {
@@ -517,6 +562,9 @@ const es: Dictionary = {
       archiveCaption: "Historial de los tres trimestres, guardado",
       returnNote:
         "El historial no se pierde: el próximo maestro lo encontrará todo listo el septiembre siguiente.",
+      radarLabel: "Gráfico de radar con el nivel alcanzado en cada competencia",
+      folderIllustrationLabel:
+        "Ilustración de una carpeta con una nube, representando una funcionalidad todavía en desarrollo",
     },
   },
   features: {
@@ -651,10 +699,45 @@ const es: Dictionary = {
     successTitle: "¡Gracias!",
     successMessage: "Hemos recibido tu mensaje. Te responderemos en menos de 48 horas.",
   },
+  faq: {
+    eyebrow: "Preguntas frecuentes",
+    title: "Todo lo que un maestro se pregunta antes de empezar",
+    items: [
+      {
+        question: "¿Qué es la evaluación por competencias?",
+        answer:
+          "Es un modelo de evaluación que valora lo que el alumnado sabe hacer con sus conocimientos, no solo si los recuerda. En Cataluña se mide con la escala NA / AS / AN / AE para cada competencia, y es la base de la programación semanal y de los informes trimestrales en primaria.",
+      },
+      {
+        question: "¿SeJus es compatible con el Decret 175/2022?",
+        answer:
+          "Sí. Las competencias, los criterios de evaluación y la escala NA / AS / AN / AE que usa SeJus están alineados con el Decret 175/2022 de ordenación de las enseñanzas de la educación básica en Cataluña.",
+      },
+      {
+        question: "¿Para qué etapas educativas está disponible SeJus?",
+        answer:
+          "Ahora mismo SeJus está disponible para Primaria. La aplicación para Infantil está en desarrollo, y la de ESO todavía no la hemos empezado — puedes dejarnos tu contacto y te avisaremos cuando estén listas.",
+      },
+      {
+        question: "¿Cómo funcionan los informes trimestrales con IA?",
+        answer:
+          "SeJus analiza las notas y comentarios que el maestro ha ido introduciendo durante el trimestre y genera una primera versión del informe, con un tono cercano y sin tecnicismos. El maestro siempre la revisa, la ajusta y la firma antes de enviarla a las familias.",
+      },
+      {
+        question: "¿Cuánto cuesta SeJus?",
+        answer:
+          "El plan Individual, para un solo maestro con todas sus clases, cuesta 9 € al mes. El plan de Centro, pensado para todo el colegio con coordinación entre ciclos, estará disponible próximamente.",
+      },
+    ],
+  },
   footer: {
     tagline: "Cada niño, una historia.",
     primaryLinks: ["Funcionalidades", "Precios", "Contacto"],
-    legalLinks: ["Política de privacidad", "Aviso legal", "Términos de uso"],
+    legalLinks: [
+      { label: "Política de privacidad", href: "/politica-privacitat" },
+      { label: "Aviso legal", href: "/avis-legal" },
+      { label: "Términos de uso", href: "/termes-us" },
+    ],
     rights: "© 2026 SeJus",
   },
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/language-provider";
 
 export function Footer() {
@@ -27,13 +28,13 @@ export function Footer() {
           </div>
           <div className="flex flex-col gap-2 text-sm">
             {t.footer.legalLinks.map((link) => (
-              <a
-                key={link}
-                href="#"
+              <Link
+                key={link.href}
+                href={link.href}
                 className="text-white/40 transition-colors duration-150 hover:text-white/70"
               >
-                {link}
-              </a>
+                {link.label}
+              </Link>
             ))}
           </div>
         </div>
