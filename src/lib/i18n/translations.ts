@@ -412,7 +412,7 @@ const ca: Dictionary = {
       {
         question: "Per a quines etapes educatives està disponible SeJus?",
         answer:
-          "Ara mateix SeJus està disponible per a Primària. L'aplicació per a Infantil està en desenvolupament, i la d'ESO encara no l'hem començat — pots deixar-nos el teu contacte i t'avisarem quan estiguin a punt.",
+          "Ara mateix SeJus està disponible per a Infantil i Primària. L'aplicació per a ESO encara no l'hem començat — pots deixar-nos el teu contacte i t'avisarem quan estigui a punt.",
       },
       {
         question: "Com funcionen els informes trimestrals amb IA?",
@@ -716,7 +716,7 @@ const es: Dictionary = {
       {
         question: "¿Para qué etapas educativas está disponible SeJus?",
         answer:
-          "Ahora mismo SeJus está disponible para Primaria. La aplicación para Infantil está en desarrollo, y la de ESO todavía no la hemos empezado — puedes dejarnos tu contacto y te avisaremos cuando estén listas.",
+          "Ahora mismo SeJus está disponible para Infantil y Primaria. La aplicación para ESO todavía no la hemos empezado — puedes dejarnos tu contacto y te avisaremos cuando esté lista.",
       },
       {
         question: "¿Cómo funcionan los informes trimestrales con IA?",

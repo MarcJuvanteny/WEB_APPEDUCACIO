@@ -8,10 +8,10 @@ import { APP_URLS } from "@/lib/config";
 
 type Stage = "infantil" | "primaria" | "eso";
 
-const STAGES: { key: Stage; color: string; href: string }[] = [
-  { key: "infantil", color: "var(--color-sky)", href: "/#contacte" },
-  { key: "primaria", color: "var(--color-terracotta)", href: APP_URLS.register },
-  { key: "eso", color: "var(--color-ink-soft)", href: "/#contacte" },
+const STAGES: { key: Stage; color: string; href: string; available: boolean }[] = [
+  { key: "infantil", color: "var(--color-sky)", href: APP_URLS.registerInfantil, available: true },
+  { key: "primaria", color: "var(--color-terracotta)", href: APP_URLS.register, available: true },
+  { key: "eso", color: "var(--color-ink-soft)", href: "/#contacte", available: false },
 ];
 
 export function PlansPage() {
@@ -56,33 +56,30 @@ export function PlansPage() {
               {stageText.prompt}
             </p>
             <div className="mt-2 grid grid-cols-3 gap-1.5">
-              {STAGES.map((s) => {
-                const isPrimaria = s.key === "primaria";
-                return (
-                  <Link
-                    key={s.key}
-                    href={s.href}
-                    className="flex flex-col items-center gap-1 rounded-sm px-2 py-2.5 text-center transition-transform duration-150 ease-[var(--ease-out-strong)] active:scale-[0.97]"
-                    style={{
-                      backgroundColor: isPrimaria ? "var(--color-terracotta)" : "var(--color-cream)",
-                      border: isPrimaria ? "none" : `1.5px solid ${s.color}`,
-                    }}
+              {STAGES.map((s) => (
+                <Link
+                  key={s.key}
+                  href={s.href}
+                  className="flex flex-col items-center gap-1 rounded-sm px-2 py-2.5 text-center transition-transform duration-150 ease-[var(--ease-out-strong)] active:scale-[0.97]"
+                  style={{
+                    backgroundColor: s.available ? s.color : "var(--color-cream)",
+                    border: s.available ? "none" : `1.5px solid ${s.color}`,
+                  }}
+                >
+                  <span
+                    className="text-[0.8rem] font-semibold"
+                    style={{ color: s.available ? "var(--color-cream)" : "var(--color-ink)" }}
                   >
-                    <span
-                      className="text-[0.8rem] font-semibold"
-                      style={{ color: isPrimaria ? "var(--color-cream)" : "var(--color-ink)" }}
-                    >
-                      {stageLabels[s.key]}
-                    </span>
-                    <span
-                      className="text-[0.62rem] font-medium uppercase tracking-wide"
-                      style={{ color: isPrimaria ? "var(--color-cream)" : s.color }}
-                    >
-                      {isPrimaria ? stageText.available : stageText.soon}
-                    </span>
-                  </Link>
-                );
-              })}
+                    {stageLabels[s.key]}
+                  </span>
+                  <span
+                    className="text-[0.62rem] font-medium uppercase tracking-wide"
+                    style={{ color: s.available ? "var(--color-cream)" : s.color }}
+                  >
+                    {s.available ? stageText.available : stageText.soon}
+                  </span>
+                </Link>
+              ))}
             </div>
 
             <ul className="mt-9 flex flex-col gap-3.5 border-t border-ink/10 pt-8">
