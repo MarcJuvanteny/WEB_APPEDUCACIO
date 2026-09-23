@@ -21,7 +21,7 @@ export function Header() {
         >
           {t.header.login}
         </a>
-        <Button href={APP_URLS.register} variant="primary" className="px-4 py-2 text-sm">
+        <Button href="/registre" variant="primary" className="px-4 py-2 text-sm">
           {t.header.register}
         </Button>
       </div>

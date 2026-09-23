@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CheckIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, CheckIcon } from "@phosphor-icons/react";
 import { useLanguage } from "@/lib/i18n/language-provider";
 import { RevealGroup, RevealItem } from "@/components/scroll-reveal";
 import { APP_URLS } from "@/lib/config";
@@ -45,36 +45,49 @@ export function PlansPage() {
 
         <RevealGroup className="grid grid-cols-1 gap-7 sm:grid-cols-2">
           <RevealItem className="flex flex-col rounded-card border border-ink/8 bg-surface p-10">
-            <h2 className="font-display text-xl text-ink">{individual.title}</h2>
-            <p className="mt-2 text-sm text-ink-soft">{individual.description}</p>
-            <div className="mt-6 font-display text-4xl text-ink">
-              {individual.price}{" "}
-              <span className="font-sans text-base text-ink-soft/70">{individual.period}</span>
+            <div className="flex items-center gap-3">
+              <h2 className="font-display text-xl text-ink">{individual.title}</h2>
+              <span className="rounded-full bg-sage-tint px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-sage">
+                {individual.badge}
+              </span>
             </div>
+            <p className="mt-2 text-sm text-ink-soft">{individual.description}</p>
 
             <p className="mt-6 text-xs font-medium uppercase tracking-wide text-ink-soft/70">
               {stageText.prompt}
             </p>
-            <div className="mt-2 grid grid-cols-3 gap-1.5">
+            <div className="mt-2.5 grid grid-cols-3 gap-2">
               {STAGES.map((s) => (
                 <Link
                   key={s.key}
                   href={s.href}
-                  className="flex flex-col items-center gap-1 rounded-sm px-2 py-2.5 text-center transition-transform duration-150 ease-[var(--ease-out-strong)] active:scale-[0.97]"
+                  className="group flex cursor-pointer flex-col items-center gap-1 rounded-sm px-2 py-3 text-center transition-[transform,box-shadow,filter] duration-150 ease-[var(--ease-out-strong)] hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracotta"
                   style={{
                     backgroundColor: s.available ? s.color : "var(--color-cream)",
                     border: s.available ? "none" : `1.5px solid ${s.color}`,
+                    boxShadow: s.available
+                      ? `0 10px 20px -12px color-mix(in srgb, ${s.color} 90%, transparent)`
+                      : "none",
                   }}
                 >
                   <span
-                    className="text-[0.8rem] font-semibold"
+                    className="flex items-center gap-1 text-[0.85rem] font-semibold"
                     style={{ color: s.available ? "var(--color-cream)" : "var(--color-ink)" }}
                   >
                     {stageLabels[s.key]}
+                    <ArrowRightIcon
+                      size={13}
+                      weight="bold"
+                      aria-hidden="true"
+                      className="transition-transform duration-150 ease-[var(--ease-out-strong)] group-hover:translate-x-0.5"
+                    />
                   </span>
                   <span
                     className="text-[0.62rem] font-medium uppercase tracking-wide"
-                    style={{ color: s.available ? "var(--color-cream)" : s.color }}
+                    style={{
+                      color: s.available ? "var(--color-cream)" : s.color,
+                      opacity: s.available ? 0.8 : 1,
+                    }}
                   >
                     {s.available ? stageText.available : stageText.soon}
                   </span>

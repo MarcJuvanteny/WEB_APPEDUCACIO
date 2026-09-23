@@ -61,8 +61,8 @@ export type Dictionary = {
   pricing: {
     eyebrow: string;
     title: string;
-    individual: { title: string; description: string; price: string; period: string; cta: string };
-    centre: { title: string; description: string; price: string; cta: string };
+    individual: { title: string; description: string; badge: string; cta: string };
+    centre: { title: string; description: string; badge: string; note: string };
   };
   plansPage: {
     eyebrow: string;
@@ -79,8 +79,7 @@ export type Dictionary = {
     individual: {
       title: string;
       description: string;
-      price: string;
-      period: string;
+      badge: string;
       cta: string;
       features: string[];
     };
@@ -91,6 +90,20 @@ export type Dictionary = {
       note: string;
       features: string[];
     };
+  };
+  registerPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    stages: {
+      infantil: { name: string; description: string };
+      primaria: { name: string; description: string };
+      eso: { name: string; description: string };
+    };
+    available: string;
+    soon: string;
+    ctaAvailable: string;
+    ctaSoon: string;
   };
   testimonials: {
     eyebrow: string;
@@ -290,24 +303,23 @@ const ca: Dictionary = {
     ],
   },
   pricing: {
-    eyebrow: "Preus",
+    eyebrow: "Plans",
     title: "Pensat per a un mestre, o per a tota l'escola",
     individual: {
       title: "Individual",
       description: "Per a un sol mestre, amb totes les seves classes.",
-      price: "9 €",
-      period: "/ mes",
+      badge: "Gratuït",
       cta: "Comença ara",
     },
     centre: {
       title: "Centre",
       description: "Per a tota l'escola, amb coordinació entre cicles.",
-      price: "Properament",
-      cta: "T'avisarem quan estigui a punt.",
+      badge: "Properament",
+      note: "T'avisarem quan estigui a punt.",
     },
   },
   plansPage: {
-    eyebrow: "Preus",
+    eyebrow: "Plans",
     title: "Tria com vols fer servir SeJus",
     subtitle:
       "Un pla senzill per a un sol mestre, i un pla de centre que estem preparant per a tota l'escola.",
@@ -322,8 +334,7 @@ const ca: Dictionary = {
     individual: {
       title: "Individual",
       description: "Per a un sol mestre, amb totes les seves classes.",
-      price: "9 €",
-      period: "/ mes",
+      badge: "Gratuït",
       cta: "Comença ara",
       features: [
         "Alumnes i classes il·limitats",
@@ -347,6 +358,30 @@ const ca: Dictionary = {
         "Formació i suport prioritari per a l'equip docent",
       ],
     },
+  },
+  registerPage: {
+    eyebrow: "Registra't",
+    title: "Per a quina etapa vols crear el teu compte?",
+    subtitle:
+      "Cada etapa té la seva pròpia aplicació, adaptada al currículum i a la manera de treballar a l'aula.",
+    stages: {
+      infantil: {
+        name: "Infantil",
+        description: "Seguiment de les primeres descobertes i dels aprenentatges de cada infant.",
+      },
+      primaria: {
+        name: "Primària",
+        description: "Competències, criteris i informes trimestrals alineats amb el Decret 175/2022.",
+      },
+      eso: {
+        name: "ESO",
+        description: "Encara no l'hem començat. Deixa'ns el teu contacte i t'avisarem.",
+      },
+    },
+    available: "Disponible",
+    soon: "Properament",
+    ctaAvailable: "Crea el compte",
+    ctaSoon: "Avisa'm",
   },
   testimonials: {
     eyebrow: "Mestres que ja l'utilitzen",
@@ -422,13 +457,13 @@ const ca: Dictionary = {
       {
         question: "Quant costa SeJus?",
         answer:
-          "El pla Individual, per a un sol mestre amb totes les seves classes, costa 9 € al mes. El pla de Centre, pensat per a tota l'escola amb coordinació entre cicles, estarà disponible properament.",
+          "Ara mateix SeJus és gratuït. El pla Individual, per a un sol mestre amb totes les seves classes, ja el pots fer servir. El pla de Centre, pensat per a tota l'escola amb coordinació entre cicles, estarà disponible properament.",
       },
     ],
   },
   footer: {
     tagline: "Cada nen, una història.",
-    primaryLinks: ["Funcionalitats", "Preus", "Contacte"],
+    primaryLinks: ["Funcionalitats", "Plans", "Contacte"],
     legalLinks: [
       { label: "Política de privacitat", href: "/politica-privacitat" },
       { label: "Avís legal", href: "/avis-legal" },
@@ -594,24 +629,23 @@ const es: Dictionary = {
     ],
   },
   pricing: {
-    eyebrow: "Precios",
+    eyebrow: "Planes",
     title: "Pensado para un maestro, o para todo el colegio",
     individual: {
       title: "Individual",
       description: "Para un solo maestro, con todas sus clases.",
-      price: "9 €",
-      period: "/ mes",
+      badge: "Gratis",
       cta: "Empieza ahora",
     },
     centre: {
       title: "Centro",
       description: "Para todo el colegio, con coordinación entre ciclos.",
-      price: "Próximamente",
-      cta: "Te avisaremos cuando esté listo.",
+      badge: "Próximamente",
+      note: "Te avisaremos cuando esté listo.",
     },
   },
   plansPage: {
-    eyebrow: "Precios",
+    eyebrow: "Planes",
     title: "Elige cómo quieres usar SeJus",
     subtitle:
       "Un plan sencillo para un solo maestro, y un plan de centro que estamos preparando para todo el colegio.",
@@ -626,8 +660,7 @@ const es: Dictionary = {
     individual: {
       title: "Individual",
       description: "Para un solo maestro, con todas sus clases.",
-      price: "9 €",
-      period: "/ mes",
+      badge: "Gratis",
       cta: "Empieza ahora",
       features: [
         "Alumnado y clases ilimitados",
@@ -651,6 +684,30 @@ const es: Dictionary = {
         "Formación y soporte prioritario para el equipo docente",
       ],
     },
+  },
+  registerPage: {
+    eyebrow: "Regístrate",
+    title: "¿Para qué etapa quieres crear tu cuenta?",
+    subtitle:
+      "Cada etapa tiene su propia aplicación, adaptada al currículo y a la manera de trabajar en el aula.",
+    stages: {
+      infantil: {
+        name: "Infantil",
+        description: "Seguimiento de los primeros descubrimientos y de los aprendizajes de cada niño.",
+      },
+      primaria: {
+        name: "Primaria",
+        description: "Competencias, criterios e informes trimestrales alineados con el Decret 175/2022.",
+      },
+      eso: {
+        name: "ESO",
+        description: "Todavía no la hemos empezado. Déjanos tu contacto y te avisaremos.",
+      },
+    },
+    available: "Disponible",
+    soon: "Próximamente",
+    ctaAvailable: "Crea la cuenta",
+    ctaSoon: "Avísame",
   },
   testimonials: {
     eyebrow: "Maestros que ya lo usan",
@@ -726,13 +783,13 @@ const es: Dictionary = {
       {
         question: "¿Cuánto cuesta SeJus?",
         answer:
-          "El plan Individual, para un solo maestro con todas sus clases, cuesta 9 € al mes. El plan de Centro, pensado para todo el colegio con coordinación entre ciclos, estará disponible próximamente.",
+          "Ahora mismo SeJus es gratuito. El plan Individual, para un solo maestro con todas sus clases, ya lo puedes usar. El plan de Centro, pensado para todo el colegio con coordinación entre ciclos, estará disponible próximamente.",
       },
     ],
   },
   footer: {
     tagline: "Cada niño, una historia.",
-    primaryLinks: ["Funcionalidades", "Precios", "Contacto"],
+    primaryLinks: ["Funcionalidades", "Planes", "Contacto"],
     legalLinks: [
       { label: "Política de privacidad", href: "/politica-privacitat" },
       { label: "Aviso legal", href: "/avis-legal" },
